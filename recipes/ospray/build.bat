@@ -15,6 +15,10 @@ cmake -S . -B build ^
     -DOSPRAY_ENABLE_APPS_TUTORIALS=OFF ^
     -DOSPRAY_ENABLE_APPS_BENCHMARK=OFF ^
     -DOSPRAY_INSTALL_DEPENDENCIES=OFF
+if %ERRORLEVEL% neq 0 exit /b 1
 
 cmake --build build --parallel %CPU_COUNT%
+if %ERRORLEVEL% neq 0 exit /b 1
+
 cmake --install build
+if %ERRORLEVEL% neq 0 exit /b 1
