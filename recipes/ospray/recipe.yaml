@@ -26,7 +26,7 @@ requirements:
   host:
     - ${{ mpi }}
     - embree
-    # - openimagedenoise  # Add in the future
+    - openimagedenoise
     - openvkl
     - rkcommon
     - snappy
