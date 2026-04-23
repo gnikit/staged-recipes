@@ -1,7 +1,7 @@
 @echo on
 setlocal enabledelayedexpansion
 
-cmake -S . -B build ^
+cmake -S . -B build -G "NMake Makefiles JOM" ^
     ${CMAKE_ARGS} ^
     -DISPC_EXECUTABLE="${BUILD_PREFIX}/bin/ispc" ^
     -DOSPRAY_MODULE_CPU=ON ^
