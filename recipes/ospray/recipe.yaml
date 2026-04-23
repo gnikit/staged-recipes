@@ -58,4 +58,6 @@ tests:
     - lib:
       - ospray
 
-
+extra:
+  recipe-maintainers:
+    - eunos-1128
