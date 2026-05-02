@@ -52,10 +52,14 @@ about:
 
 tests:
   package_contents:
+    - files:
+        - lib/cmake/ospray-*/osprayConfig.cmake
+        - lib/cmake/ospray-*/osprayConfigVersion.cmake
     - include:
       - ospray/ospray.h
     - lib:
       - ospray
+
 
 extra:
   recipe-maintainers:
