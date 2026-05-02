@@ -1,0 +1,62 @@
+schema_version: 1
+
+context:
+  version: "1.0.1"
+  python_min: "3.10"
+
+package:
+  name: neo-jax
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/n/neo-jax/neo_jax-${{ version }}.tar.gz
+  sha256: 533cc767b294634a19e938e4491c196711ad27de1d19e55baa9b67550d58bf4a
+  patches:
+    - add-license.patch
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - neo-jax = neo_jax.cli:main
+      - xneo = neo_jax.cli:main
+      - xneo_jax = neo_jax.cli:main
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - setuptools
+    - pip
+  run:
+    - python >=${{ python_min }}
+    - jax
+    - numpy
+    - netcdf4
+    - scipy
+
+tests:
+  - python:
+      imports:
+        - neo_jax
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
+  - script:
+      - neo-jax --help
+      - xneo --help
+      - xneo_jax --help
+
+about:
+  summary: Neoclassical transport code for effective ripple and trapped-particle diagnostics in Boozer coordinates
+  license: MIT
+  license_file: LICENSE
+  homepage: https://neo-jax.readthedocs.io/
+  repository: https://github.com/uwplasma/NEO_JAX
+  documentation: https://neo-jax.readthedocs.io/
+
+extra:
+  recipe-maintainers:
+    - matthewfeickert
