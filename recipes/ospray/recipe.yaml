@@ -51,15 +51,24 @@ about:
     OSPRay runs on anything from laptops, to workstations, to compute nodes in HPC systems.
 
 tests:
-  package_contents:
-    - files:
+  - script:
+      - ${{ "run_test.sh" if unix }}
+      - ${{ "run_test.bat" if win }}
+    requirements:
+      run:
+        - ${{ compiler("cxx") }}
+        - ${{ "make" if unix }}
+        - ${{ "jom" if win }}
+        - cmake
+
+  - package_contents:
+      files:
         - lib/cmake/ospray-*/osprayConfig.cmake
         - lib/cmake/ospray-*/osprayConfigVersion.cmake
-    - include:
-      - ospray/ospray.h
-    - lib:
-      - ospray
-
+      include:
+        - ospray/ospray.h
+      lib:
+        - ospray
 
 extra:
   recipe-maintainers:
