@@ -24,10 +24,10 @@ echo target_link_libraries^(test_ospray PRIVATE ospray::ospray^)
 ) > CMakeLists.txt
 
 cmake -S . -B build -G "NMake Makefiles JOM" -DCMAKE_PREFIX_PATH="%PREFIX%"
-if errorlevel 1 exit 1
+if errorlevel 1 exit /b 1
 
 cmake --build build --parallel %CPU_COUNT%
-if errorlevel 1 exit 1
+if errorlevel 1 exit /b 1
 
 build\test_ospray.exe
-if errorlevel 1 exit 1
+if errorlevel 1 exit /b 1
