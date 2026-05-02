@@ -29,5 +29,5 @@ if errorlevel 1 exit 1
 cmake --build build --parallel %CPU_COUNT%
 if errorlevel 1 exit 1
 
-build\bin\test_ospray.exe
+build\test_ospray.exe
 if errorlevel 1 exit 1
