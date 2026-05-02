@@ -19,12 +19,11 @@ requirements:
     - ${{ compiler("c") }}
     - ${{ compiler("cxx") }}
     - ${{ stdlib("c") }}
-    - cmake
     - ${{ "make" if unix }}
-    - ispc
     - ${{ "jom" if win }}
+    - cmake
+    - ispc
   host:
-    - ${{ mpi }}
     - embree
     - openimagedenoise
     - openvkl
