@@ -1,0 +1,50 @@
+schema_version: 1
+
+context:
+  python_min: "3.11"
+  version: "2026.5.0"
+
+package:
+  name: jax-galsim
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/j/jax-galsim/jax_galsim-${{ version }}.tar.gz
+  sha256: 1fca6065a935c65ed69e1931c28954fcb09884a0895b7d17a9bca8dcc88c1f8d
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - setuptools >=45
+    - setuptools-scm >=8
+    - pip
+  run:
+    - python >=${{ python_min }}
+    - numpy >=1.18.0
+    - galsim >=2.7.0
+    - jax >=0.6.0
+    - astropy >=2.0
+    - quadax
+
+tests:
+  - python:
+      imports:
+        - jax_galsim
+      pip_check: true
+      python_version: ${{ python_min }}.*
+
+about:
+  summary: The modular galaxy image simulation toolkit, but in JAX
+  license: Apache-2.0
+  license_file: LICENSE
+  homepage: https://pypi.org/project/JAX-GalSim/
+  documentation: https://jax-galsim.readthedocs.io/en/latest/
+
+extra:
+  recipe-maintainers:
+    - beckermr
