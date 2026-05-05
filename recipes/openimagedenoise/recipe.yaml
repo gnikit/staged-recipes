@@ -86,13 +86,11 @@ build:
 
 requirements:
   build:
-    - ${{ compiler("c") }}
     - ${{ compiler("cxx") }}
     - ${{ stdlib("c") }}
-    - ${{ "make" if unix }}
-    - ${{ "jom" if win }}
     - cmake
     - ispc
+    - ninja
     - python *
   host:
     - tbb-devel
