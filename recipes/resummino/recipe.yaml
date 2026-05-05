@@ -43,9 +43,6 @@ tests:
   - files:
       source:
         - input/
-    requirements:
-      run:
-        - lhapdf
     script:
       - lhapdf update
       - lhapdf install CT14lo &> /dev/null
