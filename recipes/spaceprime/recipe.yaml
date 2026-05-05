@@ -30,6 +30,7 @@ requirements:
     - shapely
     - geopandas
     - scikit-allel
+    - dask >=2024.5.1
     - contextily
     - matplotlib-base
     - folium
