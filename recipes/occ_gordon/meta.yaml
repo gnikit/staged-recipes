@@ -27,13 +27,13 @@ requirements:
     - python
     - pip
     - scikit-build-core
-    - occt =={{ occt_version }}
-    - pythonocc-core =={{ occt_version }}
+    - occt
+    - pythonocc-core
 
   run:
     - python
-    - occt =={{ occt_version }}
-    - pythonocc-core =={{ occt_version }}
+    - occt
+    - pythonocc-core
 
 test:
   imports:
