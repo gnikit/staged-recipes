@@ -1,0 +1,46 @@
+{% set version = "0.3.0" %}
+
+package:
+  name: jdeskew
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/j/jdeskew/jdeskew-{{ version }}.tar.gz
+  sha256: 3e190675faeb9241692122a7e7c78abd86d8a58428211f0016644773e971bd95
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python
+    - setuptools >=42
+    - setuptools-scm
+    - wheel
+    - pip
+  run:
+    - python
+    - numpy
+    - opencv
+
+test:
+  imports:
+    - jdeskew
+  commands:
+    - pip check
+  requires:
+    - pip
+    - python
+
+about:
+  home: https://pypi.org/project/jdeskew/
+  summary: Document Image Skew Estimation using Adaptive Radial Projection
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - bgruening
+    - danielopitz
