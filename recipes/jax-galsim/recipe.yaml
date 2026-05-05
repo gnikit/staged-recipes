@@ -40,7 +40,7 @@ tests:
 
 about:
   summary: The modular galaxy image simulation toolkit, but in JAX
-  license: Apache-2.0
+  license: BSD-2-Clause AND Apache-2.0
   license_file: LICENSE
   homepage: https://pypi.org/project/JAX-GalSim/
   documentation: https://jax-galsim.readthedocs.io/en/latest/
