@@ -21,10 +21,6 @@ permissions:
   pull-requests: read
   statuses: read
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
-
 jobs:
   linter:
     name: linter
