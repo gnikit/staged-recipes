@@ -15,7 +15,9 @@ if errorlevel 1 exit 1
 cmake --build build --parallel %CPU_COUNT%
 if errorlevel 1 exit 1
 
-ctest -V --test-dir build --parallel %CPU_COUNT%
+if not "%CONDA_BUILD_SKIP_TESTS%"=="1" (
+    ctest -V --test-dir build --parallel %CPU_COUNT%
+)
 if errorlevel 1 exit 1
 
 cmake --install build
