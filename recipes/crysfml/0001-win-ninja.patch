@@ -8,7 +8,7 @@ index fe27c74..3e5837b 100644
 
 +[[tool.scikit-build.overrides]]
 +if.platform-system = 'win32'
-+cmake.args = ['-G', 'Ninja', '-DCMAKE_POLICY_DEFAULT_CMP0141=OLD']
++cmake.args = ['-G', 'Ninja'] 
 +
  [tool.scikit-build.metadata.version]
  provider = 'crysfml_version'
