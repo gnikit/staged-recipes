@@ -6,7 +6,7 @@ package:
   version: ${{ version }}
 
 source:
-  url: https://github.com/mhekkel/salt/archive/refs/tags/v${{ version }}.tar.gz
+  url: https://forge.hekkelman.net/maarten/salt/archive/v${{ version }}.tar.gz
   sha256: 6f4c79487e952d3f4a9a67a722a17d7d15f1e32296ca2ef85bb1f278ba05a1e1
 
 build:
