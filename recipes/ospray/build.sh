@@ -1,7 +1,7 @@
 #!/bin/bash
 set -exo pipefail
 
-cmake -S . -B build  \
+cmake -S . -B build -G Ninja \
     ${CMAKE_ARGS} \
     -DISPC_EXECUTABLE="${BUILD_PREFIX}/bin/ispc" \
     -DOSPRAY_MODULE_CPU=ON \

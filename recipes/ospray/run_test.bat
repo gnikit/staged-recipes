@@ -23,7 +23,7 @@ echo add_executable^(test_ospray test_ospray.cpp^)
 echo target_link_libraries^(test_ospray PRIVATE ospray::ospray^)
 ) > CMakeLists.txt
 
-cmake -S . -B build -G "NMake Makefiles JOM" -DCMAKE_PREFIX_PATH="%PREFIX%"
+cmake -S . -B build -G Ninja -DCMAKE_PREFIX_PATH="%PREFIX%"
 if errorlevel 1 exit /b 1
 
 cmake --build build --parallel %CPU_COUNT%

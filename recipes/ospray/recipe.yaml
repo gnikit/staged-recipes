@@ -16,13 +16,11 @@ build:
 
 requirements:
   build:
-    - ${{ compiler("c") }}
     - ${{ compiler("cxx") }}
     - ${{ stdlib("c") }}
-    - ${{ "make" if unix }}
-    - ${{ "jom" if win }}
     - cmake
     - ispc
+    - ninja
   host:
     - embree
     - openimagedenoise
@@ -57,9 +55,8 @@ tests:
     requirements:
       run:
         - ${{ compiler("cxx") }}
-        - ${{ "make" if unix }}
-        - ${{ "jom" if win }}
         - cmake
+        - ninja
 
   - package_contents:
       files:

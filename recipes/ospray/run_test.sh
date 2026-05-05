@@ -24,6 +24,6 @@ add_executable(test_ospray test_ospray.cpp)
 target_link_libraries(test_ospray PRIVATE ospray::ospray)
 EOF
 
-cmake -S . -B build -DCMAKE_PREFIX_PATH="$PREFIX"
+cmake -S . -B build -G Ninja -DCMAKE_PREFIX_PATH="$PREFIX"
 cmake --build build --parallel ${CPU_COUNT}
 ./build/test_ospray
