@@ -44,6 +44,9 @@ tests:
   - python:
       imports:
         - spaceprime
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
       pip_check: false
 
 about:
