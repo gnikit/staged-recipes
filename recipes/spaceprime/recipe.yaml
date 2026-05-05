@@ -25,6 +25,7 @@ requirements:
     - python
     - numpy
     - msprime
+    - libopenblas
     - rasterio >=1.0.0
     - scipy
     - shapely
