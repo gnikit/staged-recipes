@@ -19,10 +19,7 @@ requirements:
     - ${{ compiler("cxx") }}
     - ${{ stdlib("c") }}
     - cmake
-    - if: unix
-      then: make
-    - if: win
-      then: jom
+    - ninja
   host:
     - tbb-devel
   run_exports:
