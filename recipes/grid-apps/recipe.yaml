@@ -23,7 +23,7 @@ build:
     
 requirements:
   host:
-    - python 3.10.*
+    - python ${{ python_min }}.*
     - poetry-core >=1.8.0
     - poetry-dynamic-versioning >=1.9, 1.*
     - setuptools
@@ -31,8 +31,8 @@ requirements:
   run:
     - python >=${{ python_min }}
     # Mira packages
-    - geoh5py >=0.12.0, 0.12.*
-    - geoapps-utils >=0.6.0, 0.6.*
+    - geoh5py 0.12.*
+    - geoapps-utils 0.6.*
     # other direct dependencies
     - discretize 0.11.*
     - numpy 1.26.*
@@ -41,6 +41,7 @@ requirements:
 
 tests:
   - python:
+      python_version: ${{ python_min }}.*
       imports:
         - ${{ module_name }}
         - ${{ module_name }}._version
