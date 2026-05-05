@@ -1,7 +1,7 @@
 @echo on
 setlocal enabledelayedexpansion
 
-cmake -S . -B build -G "NMake Makefiles JOM" ^
+cmake -S . -B build -G Ninja ^
     %CMAKE_ARGS% ^
     -DBUILD_SHARED_LIBS=ON ^
     -DOIDN_DEVICE_CPU=ON ^

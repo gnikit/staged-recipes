@@ -1,7 +1,7 @@
 #!/bin/bash
 set -exo pipefail
 
-cmake -S . -B build \
+cmake -S . -B build -G Ninja \
     ${CMAKE_ARGS} \
     -DBUILD_SHARED_LIBS=ON \
     -DOIDN_DEVICE_CPU=ON \
