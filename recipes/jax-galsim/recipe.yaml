@@ -36,7 +36,7 @@ tests:
       imports:
         - jax_galsim
       # fails due to galsim
-      # pip_check: true
+      pip_check: false
       python_version:
         - ${{ python_min }}.*
         - "*"
