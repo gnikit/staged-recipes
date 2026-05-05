@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://forge.hekkelman.net/maarten/salt/archive/v${{ version }}.tar.gz
-  sha256: 6f4c79487e952d3f4a9a67a722a17d7d15f1e32296ca2ef85bb1f278ba05a1e1
+  sha256: e934135c0b2fd8d967d5a1244490e179f64a7f22e2665ef26171752561997c23
 
 build:
   number: 0
@@ -55,12 +55,12 @@ tests:
       - salt --help
 
 about:
-  homepage: "https://github.com/mhekkel/salt"
+  homepage: "https://forge.hekkelman.net/maarten/salt"
   summary: "Terminal with built-in SSH"
   description: Salt is a terminal emulator with built-in SSH.
   license: BSD-2-Clause
   license_file: LICENSE
-  repository: https://github.com/mhekkel/salt
+  repository: https://forge.hekkelman.net/maarten/salt
 
 extra:
   recipe-maintainers:
