@@ -15,12 +15,17 @@ build:
   skip: match(python, "<3.11")
 
 requirements:
-  host:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
     - ${{ compiler('fortran') }}
-    - python
     - cmake
-    - ninja
-    - make
+    - if: win
+      then: ninja
+    - if: unix
+      then: make
+  host:
+    - python
     - scikit-build-core >=0.11
     - versioningit
     - pip
