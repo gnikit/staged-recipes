@@ -16,12 +16,14 @@ build:
 
 requirements:
   host:
+    - ${{ compiler('fortran') }}
     - python
+    - cmake
+    - ninja
+    - make
     - scikit-build-core >=0.11
     - versioningit
     - pip
-    - cmake
-    - ninja
   run:
     - python
     - numpy
