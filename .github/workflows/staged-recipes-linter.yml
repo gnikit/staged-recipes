@@ -26,8 +26,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  staged-recipes-linter:
-    name: staged-recipes-linter
+  linter:
+    name: linter
     runs-on: ubuntu-slim
     defaults:
       run:
