@@ -8,19 +8,12 @@ package:
 source:
   url: https://pypi.org/packages/source/c/crysfml/crysfml-${{ version }}.tar.gz
   sha256: 078a0b788abebf98659d0902d61f213ca177879dd64e3b7fc6781a5b5654909f
+  patches:
+    - 0001-win-ninja.patch
 
 build:
   number: 0
-  script:
-    - if: win
-      then: |
-        set "CMAKE_GENERATOR=Ninja"
-        set "FC=flang.exe"
-        set "CMAKE_Fortran_COMPILER=flang.exe"
-        ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --config-settings=cmake.args="-DCMAKE_Fortran_COMPILER=flang.exe"
-    - if: unix
-      then: |
-        ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: match(python, "<3.11")
 
 requirements:
