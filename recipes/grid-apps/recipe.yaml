@@ -12,7 +12,7 @@ package:
 
 source:
   url: https://github.com/MiraGeoscience/${{ name }}/archive/v${{ version }}.zip
-  sha256: 642BE53F26562A67A54CDA00C59808BF4C55A2DB7EA5A09F04E0767CD843D094
+  sha256: 94c6ab6ecec73254ae0c9ccea343c9fc6182c7701cbefe37e5422d01eec6e26c
 
 build:
   number: 0
@@ -73,3 +73,4 @@ about:
 extra:
   recipe-maintainers:
     - conda-forge/geoh5py
+    
