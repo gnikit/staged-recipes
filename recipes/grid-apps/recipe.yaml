@@ -18,9 +18,8 @@ build:
   number: 0
   noarch: python
   script:
-    env:
-      POETRY_DYNAMIC_VERSIONING_BYPASS: ${{ version }}
     content:
+      - export POETRY_DYNAMIC_VERSIONING_BYPASS=${{ version }}
       - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
     
 requirements:
