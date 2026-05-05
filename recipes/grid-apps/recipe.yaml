@@ -17,9 +17,11 @@ source:
 build:
   number: 0
   noarch: python
-  script: 
-    - export POETRY_DYNAMIC_VERSIONING_BYPASS=${{ version }}
-    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  script:
+    env:
+      POETRY_DYNAMIC_VERSIONING_BYPASS: ${{ version }}
+    content:
+      - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
     
 requirements:
   host:
@@ -66,11 +68,9 @@ about:
   license: MIT
   license_file:
     - LICENSE
-    - docs/source/THIRD_PARTY_SOFTWARE.rst
   homepage: https://www.mirageoscience.com/mining-industry-software/python-integration/
   repository: https://github.com/MiraGeoscience/grid-apps
 
 extra:
   recipe-maintainers:
     - conda-forge/geoh5py
-    
