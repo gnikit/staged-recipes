@@ -21,6 +21,7 @@ requirements:
     - versioningit
     - pip
     - cmake
+    - ninja
   run:
     - python
     - numpy
