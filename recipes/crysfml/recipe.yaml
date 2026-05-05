@@ -11,7 +11,16 @@ source:
 
 build:
   number: 0
-  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  script:
+    - if: win
+      then: |
+        set "CMAKE_GENERATOR=Ninja"
+        set "FC=flang.exe"
+        set "CMAKE_Fortran_COMPILER=flang.exe"
+        ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --config-settings=cmake.args="-DCMAKE_Fortran_COMPILER=flang.exe"
+    - if: unix
+      then: |
+        ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: match(python, "<3.11")
 
 requirements:
