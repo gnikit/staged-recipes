@@ -18,15 +18,21 @@ build:
 
 requirements:
   build:
-    - ${{ stdlib("c") }}
-    - ${{ compiler('c') }}
-    - ${{ compiler('cxx') }}
-    - ${{ compiler('fortran') }}
-    - cmake
-    - if: win
-      then: ninja
     - if: unix
-      then: make
+      then:
+        - make
+        - ${{ stdlib("c") }}
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}
+        - ${{ compiler('fortran') }}
+        - cmake
+    - if: win
+      then:
+        - ninja
+        - ${{ stdlib("m2w64_c") }}
+        - ${{ compiler("m2w64_c") }}
+        - ${{ compiler("m2w64_fortran") }}
+        - cmake
   host:
     - python
     - scikit-build-core >=0.11
