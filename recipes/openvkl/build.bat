@@ -1,7 +1,7 @@
 @echo on
 setlocal enabledelayedexpansion
 
-cmake -S . -B build -G "NMake Makefiles JOM" ^
+cmake -S . -B build -G Ninja ^
     %CMAKE_ARGS% ^
     -DBUILD_SHARED_LIBS=ON ^
     -DBUILD_EXAMPLES=OFF ^
@@ -14,7 +14,9 @@ if errorlevel 1 exit 1
 cmake --build build --parallel %CPU_COUNT%
 if errorlevel 1 exit 1
 
-ctest -V --test-dir build --parallel %CPU_COUNT%
+if not "%CONDA_BUILD_SKIP_TESTS%"=="1" (
+    ctest -V --test-dir build --parallel %CPU_COUNT%
+)
 if errorlevel 1 exit 1
 
 cmake --install build
