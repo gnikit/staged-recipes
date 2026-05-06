@@ -1,0 +1,48 @@
+context:
+  version: "2.45.1"
+
+package:
+  name: dex
+  version: ${{ version }}
+
+source:
+  url: https://github.com/dexidp/dex/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 6dc9bf768d67723d8117268d5177c7450519608f5403cd10e857c89465fa2b9e
+  target_directory: src
+
+build:
+  number: 0
+  script:
+    - cd src/cmd/dex
+    - go-licenses save . --save_path ../../../library_licenses --ignore github.com/dexidp/dex
+    - if: unix
+      then: go build -v -o $PREFIX/bin/dex -ldflags="-s -w -X main.version=${{ version }}" .
+      else: go build -v -o %LIBRARY_BIN%\dex.exe -ldflags="-s -X main.version=${{ version }}" .
+
+requirements:
+  build:
+    - ${{ compiler("go-nocgo") }}
+    - go-licenses
+
+tests:
+  - script: dex -h
+  - package_contents:
+      bin:
+        - dex
+      strict: true
+
+about:
+  homepage: https://github.com/dexidp/dex
+  summary: OpenID Connect (OIDC) identity and OAuth 2.0 provider with pluggable connectors
+  description: |
+    Dex is an identity service that uses OpenID Connect to drive authentication for other apps.
+  license: Apache-2.0
+  license_file:
+    - src/LICENSE
+    - library_licenses/
+  documentation: https://dexidp.io
+  repository: https://github.com/dexidp/dex
+
+extra:
+  recipe-maintainers:
+    - xhochy
