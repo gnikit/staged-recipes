@@ -26,7 +26,7 @@ requirements:
     - gtest
     - openimagedenoise
     - openvkl
-    - rkcommon
+    - rkcommon ==1.14.0
     - tbb-devel
   run_exports:
     - ${{ pin_subpackage("ospray", upper_bound="x.x") }}
