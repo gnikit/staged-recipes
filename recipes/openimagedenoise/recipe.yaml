@@ -105,7 +105,7 @@ requirements:
     - ninja
     - python *
   host:
-    - openimageio
+    - ${{ "openimageio" if unix }}
     - tbb-devel
   run_exports:
     - ${{ pin_subpackage(name|lower, upper_bound="x") }}

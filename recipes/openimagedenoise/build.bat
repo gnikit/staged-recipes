@@ -3,13 +3,12 @@ setlocal enabledelayedexpansion
 
 cmake -S . -B build -G Ninja ^
     %CMAKE_ARGS% ^
-    -DCMAKE_CXX_FLAGS="%CXXFLAGS% /U_WIN" ^
     -DBUILD_SHARED_LIBS=ON ^
     -DOIDN_DEVICE_CPU=ON ^
     -DOIDN_FILTER_RT=ON ^
     -DOIDN_FILTER_RTLIGHTMAP=ON ^
     -DOIDN_APPS=ON ^
-    -DOIDN_APPS_OPENIMAGEIO=ON ^
+    -DOIDN_APPS_OPENIMAGEIO=OFF ^
     -DOIDN_INSTALL_DEPENDENCIES=OFF
 if %ERRORLEVEL% neq 0 exit /b 1
 
