@@ -31,23 +31,6 @@ requirements:
   run_exports:
     - ${{ pin_subpackage("ospray", upper_bound="x.x") }}
 
-about:
-  homepage: https://www.ospray.org
-  repository: https://github.com/RenderKit/OSPRay
-  documentation: https://www.ospray.org/documentation.html
-  license: Apache-2.0
-  license_file: LICENSE.txt
-  summary: An Open, Scalable, Portable, Ray Tracing Based Rendering Engine for High-Fidelity Visualization
-  description: |
-    Intel® OSPRay is an open source, scalable, and portable ray tracing engine for high-performance,
-    high-fidelity visualization on Intel Architecture CPUs, Intel Xe GPUs, and Aarch64/ARM64 CPUs.
-    OSPRay is part of the Intel Rendering Toolkit (Render Kit) and is released under the permissive Apache 2.0 license.
-
-    The purpose of OSPRay is to provide an open, powerful, and easy-to-use rendering library that allows one
-    to easily build applications that use ray tracing based rendering for interactive applications
-    (including both surface- and volume-based visualizations).
-    OSPRay runs on anything from laptops, to workstations, to compute nodes in HPC systems.
-
 tests:
   - package_contents:
       files:
@@ -72,6 +55,23 @@ tests:
         - ${{ compiler("cxx") }}
         - cmake
         - ninja
+
+about:
+  homepage: https://www.ospray.org
+  repository: https://github.com/RenderKit/OSPRay
+  documentation: https://www.ospray.org/documentation.html
+  license: Apache-2.0
+  license_file: LICENSE.txt
+  summary: An Open, Scalable, Portable, Ray Tracing Based Rendering Engine for High-Fidelity Visualization
+  description: |
+    Intel® OSPRay is an open source, scalable, and portable ray tracing engine for high-performance,
+    high-fidelity visualization on Intel Architecture CPUs, Intel Xe GPUs, and Aarch64/ARM64 CPUs.
+    OSPRay is part of the Intel Rendering Toolkit (Render Kit) and is released under the permissive Apache 2.0 license.
+
+    The purpose of OSPRay is to provide an open, powerful, and easy-to-use rendering library that allows one
+    to easily build applications that use ray tracing based rendering for interactive applications
+    (including both surface- and volume-based visualizations).
+    OSPRay runs on anything from laptops, to workstations, to compute nodes in HPC systems.
 
 extra:
   recipe-maintainers:
