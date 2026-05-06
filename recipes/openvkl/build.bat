@@ -8,8 +8,7 @@ cmake -S . -B build -G Ninja ^
     -DBUILD_TESTING=ON ^
     -DBUILD_BENCHMARKS=OFF ^
     -DOpenVDB_ROOT="%LIBRARY_PREFIX%" ^
-    -DISPC_EXECUTABLE="%BUILD_PREFIX%\bin\ispc.exe" ^
-    -DISPC_VERSION=1.30.0
+    -DISPC_EXECUTABLE="%BUILD_PREFIX%\Library\bin\ispc.exe"
 if %ERRORLEVEL% neq 0 exit /b 1
 
 cmake --build build --parallel %CPU_COUNT%
