@@ -1,6 +1,12 @@
 #!/bin/bash
 set -exo pipefail
 
+if [[ "${mpi}" == "nompi" ]]; then
+  OSPRAY_MPI=OFF
+else
+  OSPRAY_MPI=ON
+fi
+
 cmake -S . -B build -G Ninja \
     ${CMAKE_ARGS} \
     -DISPC_EXECUTABLE="${BUILD_PREFIX}/bin/ispc" \
@@ -8,7 +14,7 @@ cmake -S . -B build -G Ninja \
     -DOSPRAY_MODULE_GPU=OFF \
     -DOSPRAY_ENABLE_VOLUMES=ON \
     -DOSPRAY_MODULE_DENOISER=ON \
-    -DOSPRAY_MODULE_MPI=OFF \
+    -DOSPRAY_MODULE_MPI=${OSPRAY_MPI} \
     -DOSPRAY_ENABLE_APPS=ON \
     -DOSPRAY_ENABLE_APPS_TESTING=ON \
     -DOSPRAY_ENABLE_APPS_EXAMPLES=OFF \

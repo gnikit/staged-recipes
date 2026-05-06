@@ -1,6 +1,12 @@
 @echo on
 setlocal enabledelayedexpansion
 
+if "%mpi%"=="nompi" (
+    set "OSPRAY_MPI=OFF"
+) else (
+    set "OSPRAY_MPI=ON"
+)
+
 cmake -S . -B build -G Ninja ^
     ${CMAKE_ARGS} ^
     -DISPC_EXECUTABLE="${BUILD_PREFIX}\Library\bin\ispc.exe" ^
@@ -8,7 +14,7 @@ cmake -S . -B build -G Ninja ^
     -DOSPRAY_MODULE_GPU=OFF ^
     -DOSPRAY_ENABLE_VOLUMES=ON ^
     -DOSPRAY_MODULE_DENOISER=ON ^
-    -DOSPRAY_MODULE_MPI=OFF ^
+    -DOSPRAY_MODULE_MPI=${OSPRAY_MPI} ^
     -DOSPRAY_ENABLE_APPS=ON ^
     -DOSPRAY_ENABLE_APPS_TESTING=ON ^
     -DOSPRAY_ENABLE_APPS_EXAMPLES=OFF ^
