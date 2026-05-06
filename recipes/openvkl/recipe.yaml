@@ -22,8 +22,8 @@ requirements:
     - ispc
     - ninja
   host:
-    - libboost-devel
     - embree
+    - libboost-devel
     - openvdb
     - rkcommon
     - tbb-devel
@@ -34,7 +34,7 @@ requirements:
 tests:
   - package_contents:
       include:
-        - openvkl/*
+        - openvkl/openvkl.h
       lib:
         - openvkl
 
