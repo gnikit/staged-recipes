@@ -57,8 +57,21 @@ tests:
         - ospray/ospray.h
       lib:
         - ospray
+
   - script:
-      - ospTestSuite
+      - cmake -G Ninja -S test_image_data -B build_regression_tests -D OSPRAY_TEST_ISA=AVX2
+      - cmake --build build_regression_tests --target ospray_test_data
+      - cd build_regression_tests
+      - mkdir failed
+      - ospTestSuite --gtest_output=xml:tests.xml --baseline-dir=regression_test_baseline --failed-dir=failed
+    files:
+      source:
+        - test_image_data/
+    requirements:
+      run:
+        - ${{ compiler("cxx") }}
+        - cmake
+        - ninja
 
 extra:
   recipe-maintainers:
