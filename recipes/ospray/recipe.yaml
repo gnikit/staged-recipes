@@ -23,6 +23,7 @@ requirements:
     - ninja
   host:
     - embree
+    - gtest
     - openimagedenoise
     - openvkl
     - rkcommon
@@ -48,15 +49,6 @@ about:
     OSPRay runs on anything from laptops, to workstations, to compute nodes in HPC systems.
 
 tests:
-  - script:
-      - ${{ "run_test.sh" if unix }}
-      - ${{ "run_test.bat" if win }}
-    requirements:
-      run:
-        - ${{ compiler("cxx") }}
-        - cmake
-        - ninja
-
   - package_contents:
       files:
         - lib/cmake/ospray-*/osprayConfig.cmake
@@ -65,6 +57,8 @@ tests:
         - ospray/ospray.h
       lib:
         - ospray
+  - script:
+      - ospTestSuite
 
 extra:
   recipe-maintainers:
