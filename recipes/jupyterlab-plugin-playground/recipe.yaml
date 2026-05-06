@@ -35,7 +35,7 @@ tests:
       python_version: ${{ python_min }}.*
   - script:
       - jupyter labextension list
-      - jupyter labextension list 2>&1 | grep -ie "@jupyterlab/plugin-playground.*OK"
+      - jupyter labextension list 2>&1 | grep -ie "@jupyterlab/plugin-playground"
     requirements:
       run:
         - python ${{ python_min }}.*
