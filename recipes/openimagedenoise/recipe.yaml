@@ -105,6 +105,7 @@ requirements:
     - ninja
     - python *
   host:
+    - openimageio
     - tbb-devel
   run_exports:
     - ${{ pin_subpackage(name|lower, upper_bound="x") }}
@@ -117,6 +118,9 @@ tests:
         - ${{ "OpenImageDenoise_device_cpu" if not win }}
       include:
         - OpenImageDenoise/oidn.hpp
+  - script:
+      - oidnDenoise --version
+      - oidnDenoise --help
 
 about:
   homepage: https://www.openimagedenoise.org
