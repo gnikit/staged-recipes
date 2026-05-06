@@ -1,5 +1,5 @@
 context:
-  version: "1.6.0"
+  version: "1.7.0"
   build: 0
 
 recipe:
@@ -8,7 +8,7 @@ recipe:
 
 source:
   url: https://github.com/ilastik/dpct/archive/${{ version }}.tar.gz
-  sha256: 9913f050ed2cbbb74820197e31eace26be3f715afd04ccfe08a8ed24c4dbe341
+  sha256: 22fad6f5368974a57cd68c3287843f4937a7207ed552a970ef2f7d0c07c7091a
 
 build:
   number: ${{ build }}
@@ -34,35 +34,26 @@ outputs:
         - ${{ compiler("c") }}
         - ${{ compiler("cxx") }}
       host:
-        - pybind11
+        - jsoncpp
         - lemon
       run_exports:
         weak:
           - ${{ pin_subpackage("libdpct", exact=True) }}
 
     tests:
+      - package_contents:
+          include:
+            - dpct/*.h
+          lib:
+            - dpct
+
       - script:
-        - if: not win
-          then: test -d ${PREFIX}/include/dpct
-          else: if not exist %LIBRARY_INC%\dpct exit 1
-        - if: osx
-          then: test -f ${PREFIX}/lib/libdpct.dylib
-        - if: linux
-          then: test -f ${PREFIX}/lib/libdpct.so
-        - if: win
-          then: if not exist %LIBRARY_BIN%\dpct.dll exit 1
-        - if: not win
-          then: test -f ${PREFIX}/lib/cmake/dpct/dpctTargets.cmake
-          else: if not exist %LIBRARY_LIB%\cmake\dpct\dpctTargets.cmake exit 1
-        - if: not win
-          then: test -f ${PREFIX}/lib/cmake/dpct/dpctTargets-release.cmake
-          else: if not exist %LIBRARY_LIB%\cmake\dpct\dpctTargets-release.cmake exit 1
-        - if: not win
-          then: test -f ${PREFIX}/lib/cmake/dpct/dpctConfig.cmake
-          else: if not exist %LIBRARY_LIB%\cmake\dpct\dpctConfig.cmake exit 1
-        - if: not win
-          then: test -f ${PREFIX}/lib/cmake/dpct/dpctConfigVersion.cmake
-          else: if not exist %LIBRARY_LIB%\cmake\dpct\dpctConfigVersion.cmake exit 1
+        - cmake-package-check dpct --targets dpct::dpct
+        requirements:
+          run:
+            - cmake-package-check
+            - ${{ compiler("c") }}
+            - ${{ compiler("cxx") }}
 
 
   - package:
@@ -109,7 +100,6 @@ outputs:
       - python:
           imports:
             - dpct
-          pip_check: false
 
 about:
   homepage: https://github.com/ilastik/dpct
@@ -117,7 +107,6 @@ about:
   summary: Dynamic Programming Cell Tracking Solver Library
   license_file:
     - LICENSE
-    - LICENSE-JsonCpp
 
 extra:
   recipe-maintainers:
