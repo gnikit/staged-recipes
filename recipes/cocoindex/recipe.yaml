@@ -10,17 +10,21 @@ package:
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
-  sha256: 1b242c348b501ec8b9836a626a1779a7f6185f479818dac73f7d9dd769d9b192
+  - url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+    sha256: 1b242c348b501ec8b9836a626a1779a7f6185f479818dac73f7d9dd769d9b192
+  # cocoindex sdist omits LICENSE; Added to Recipe Folder
 
 build:
   number: 0
   script:
     - if: unix
-      then:
-        - export CFLAGS="${CFLAGS} -D_DEFAULT_SOURCE"
-    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
-    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+      then: |
+        export CFLAGS="${CFLAGS:-} -D_BSD_SOURCE -D_DEFAULT_SOURCE"
+        cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+        ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+      else: |
+        cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+        ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip:
     - match(python, "<3.11")
 
