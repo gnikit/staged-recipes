@@ -121,6 +121,7 @@ tests:
   - script:
       - oidnDenoise --version
       - oidnDenoise --help
+      - oidnTest
 
 about:
   homepage: https://www.openimagedenoise.org
