@@ -3,8 +3,8 @@ schema_version: 1
 context:
   version: "3.2.0"
   build_base: 0
-  build: ${{ build_base if mpi != 'nompi' else build_base + 100 }}
-  mpi_prefix: ${{ 'mpi_' + mpi if mpi != 'nompi' else 'nompi' }}
+  build: ${{ build_base + 100 if mpi == 'nompi' else build_base }}
+  mpi_prefix: ${{ 'nompi' if mpi == 'nompi' else 'mpi_' + mpi }}
 
 package:
   name: ospray
