@@ -11,6 +11,18 @@ package:
 source:
   - url: https://github.com/RenderKit/oidn/archive/refs/tags/v${{ version }}.tar.gz
     sha256: bab9197187a8754cdc0293475a00b7be6a0e967a0da73d6cc86697969cfb0a7e
+
+  # The weight files below are fetched from a separate oidn-weights repository and are not
+  # versioned in sync with the main OIDN release. When updating the port version, find the
+  # correct commit hash for the oidn-weights repository by checking the submodule pointer
+  # in the upstream oidn repository:
+  #
+  #   git clone https://github.com/RenderKit/oidn.git
+  #   cd oidn
+  #   git checkout v<VERSION>
+  #   git submodule status  # look for the hash next to "weights"
+  #
+  # Then update the commit hash in all URLs below and regenerate all sha256 values accordingly.
   - url: https://media.githubusercontent.com/media/RenderKit/oidn-weights/28883d1769d5930e13cf7f1676dd852bd81ed9e7/rt_alb.tza
     sha256: 752c9a8d57884d660ae375a7c853cad8a44f77d559bb282f0ef39f8e758601a4
     target_directory: weights
