@@ -26,6 +26,7 @@ requirements:
     - openvdb
     - rkcommon
     - tbb-devel
+    - zlib
   run_exports:
     - ${{ pin_subpackage("openvkl", upper_bound="x") }}
 
