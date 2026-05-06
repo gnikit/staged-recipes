@@ -22,6 +22,7 @@ requirements:
     - ispc
     - ninja
   host:
+    - libboost-devel
     - embree
     - openvdb
     - rkcommon
