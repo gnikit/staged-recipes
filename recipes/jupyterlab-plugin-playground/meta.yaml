@@ -1,5 +1,5 @@
 {% set python_min = "3.9" %}
-{% set version = "1.0.0b0" %}
+{% set version = "1.0.0" %}
 
 package:
   name: jupyterlab-plugin-playground
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/j/jupyterlab-plugin-playground/jupyterlab_plugin_playground-{{ version }}.tar.gz
-  sha256: 9e89f0ed00d846285baf0137b53eb7afabc7b83edc7675f6a46bf5f95a4a541a
+  sha256: 13707d7bcab114618a33de50013f8991c25666a50c1cc62f23a5d9a0ffd58ec7
 
 build:
   noarch: python
