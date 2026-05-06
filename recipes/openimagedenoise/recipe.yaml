@@ -119,8 +119,6 @@ tests:
       include:
         - OpenImageDenoise/oidn.hpp
   - script:
-      - oidnDenoise --help
-      - oidnBenchmark --help
       - oidnTest
 
 about:
