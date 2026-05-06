@@ -8,16 +8,17 @@ cmake -S . -B build -G Ninja ^
     -DBUILD_TESTING=ON ^
     -DBUILD_BENCHMARKS=OFF ^
     -DOpenVDB_ROOT="%LIBRARY_PREFIX%" ^
-    -DISPC_EXECUTABLE="%BUILD_PREFIX%\bin\ispc.exe"
-if errorlevel 1 exit 1
+    -DISPC_EXECUTABLE="%BUILD_PREFIX%\bin\ispc.exe" ^
+    -DISPC_VERSION=1.30.0
+if %ERRORLEVEL% neq 0 exit /b 1
 
 cmake --build build --parallel %CPU_COUNT%
-if errorlevel 1 exit 1
+if %ERRORLEVEL% neq 0 exit /b 1
 
 if not "%CONDA_BUILD_SKIP_TESTS%"=="1" (
     ctest -V --test-dir build --parallel %CPU_COUNT%
 )
-if errorlevel 1 exit 1
+if %ERRORLEVEL% neq 0 exit /b 1
 
 cmake --install build
-if errorlevel 1 exit 1
+if %ERRORLEVEL% neq 0 exit /b 1
