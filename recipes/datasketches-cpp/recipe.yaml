@@ -21,6 +21,7 @@ requirements:
     - cmake
     - ninja
   host:
+    - cmake
   run:
     - if: unix
       then: __unix
