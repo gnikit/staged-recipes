@@ -1,5 +1,5 @@
 context:
-  version: "0.2.0"
+  version: "0.2.2"
 
 package:
   name: kdsource
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/KDSource/KDSource/archive/v${{ version }}.tar.gz
-  sha256: 9f43e73b207e348bb28f701d6129facf6f886f5b8383acf3f6bc37e9a6dd4d83
+  sha256: 51159abaa2b83a38322b24909bf819586427dd0740e178b3df1983078f3ebf61
 
 build:
   skip: is_abi3 and not is_python_min
