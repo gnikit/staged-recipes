@@ -1,0 +1,69 @@
+context:
+  version: "0.1.1"
+
+package:
+  name: obscura
+  version: ${{ version }}
+
+source:
+  url: https://github.com/h4ckf0r0day/obscura/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 9d5f08d6ac00325bbe7a07289e2a0bf385ca94ad2dd2d01f0476fff920e2a068
+
+build:
+  number: 0
+  script:
+    env:
+      CARGO_PROFILE_RELEASE_STRIP: symbols
+      CARGO_PROFILE_RELEASE_LTO: fat
+    content:
+      - if: unix
+        then:
+          - export LIBCLANG_PATH=${BUILD_PREFIX}/lib
+          - export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=${CONDA_BUILD_SYSROOT} -isystem $(${CC} -print-file-name=include)"
+        else:
+          - set LIBCLANG_PATH=%BUILD_PREFIX%\Library\bin
+      - cargo auditable build --release --locked --package obscura-cli --bin obscura --features stealth
+      - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+      - if: unix
+        then:
+          - install -Dm755 "$(find target -path '*/release/obscura' -type f | head -n 1)" ${{ PREFIX }}/bin/obscura
+        else:
+          - for /d %%d in (target\*) do if exist %%d\release\obscura.exe copy %%d\release\obscura.exe %LIBRARY_BIN%\obscura.exe
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
+    - ${{ compiler('rust') }}
+    - ${{ stdlib('c') }}
+    - cargo-auditable
+    - cargo-bundle-licenses
+    - cmake
+    - libclang
+    - perl
+
+tests:
+  - script:
+      - obscura --help
+  - package_contents:
+      bin:
+        - obscura
+      strict: true
+
+about:
+  homepage: https://github.com/h4ckf0r0day/obscura
+  summary: The headless browser for AI agents and web scraping
+  description: |
+    Obscura is a headless browser engine written in Rust for web scraping
+    and AI agent automation. It runs JavaScript via V8, supports the Chrome
+    DevTools Protocol, and provides a command line interface for serving and
+    fetching pages.
+  license: Apache-2.0
+  license_file:
+    - LICENSE
+    - THIRDPARTY.yml
+  repository: https://github.com/h4ckf0r0day/obscura
+
+extra:
+  recipe-maintainers:
+    - moritzwilksch
