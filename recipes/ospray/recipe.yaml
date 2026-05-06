@@ -26,7 +26,6 @@ requirements:
     - openimagedenoise
     - openvkl
     - rkcommon
-    - snappy
     - tbb-devel
   run_exports:
     - ${{ pin_subpackage("ospray", upper_bound="x.x") }}
