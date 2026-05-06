@@ -1,4 +1,0 @@
-set WITH_PYTHON=ON
-set MULTI_STAGE_BUILD=ON
-
-call %RECIPE_DIR%\build.bat
