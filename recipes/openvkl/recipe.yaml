@@ -25,6 +25,7 @@ requirements:
     - embree
     - openvdb
     - rkcommon
+    - tbb-devel
   run_exports:
     - ${{ pin_subpackage("openvkl", upper_bound="x") }}
 
