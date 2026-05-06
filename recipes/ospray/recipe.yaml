@@ -49,7 +49,7 @@ tests:
         - ospray
 
   - script:
-      - cmake -G Ninja -S test_image_data -B build_regression_tests -D OSPRAY_TEST_ISA=AVX2
+      - cmake -G Ninja -S test_image_data -B build_regression_tests
       - cmake --build build_regression_tests --target ospray_test_data
       - cd build_regression_tests
       - mkdir failed
