@@ -1,0 +1,43 @@
+context:
+  version: "0.20250815.1"
+
+package:
+  name: ccls
+  version: ${{ version }}
+
+source:
+  url: https://github.com/MaskRay/ccls/archive/refs/tags/${{ version }}.tar.gz
+  sha256: b44d9f981e65dcf950525886f8211727da8a41d3070d323d558f950749bc493c
+
+build:
+  number: 0
+  skip:
+    - win
+
+requirements:
+  build:
+    - ${{ compiler('cxx') }}
+    - ${{ stdlib('c') }}
+    - cmake
+    - ninja
+  host:
+    - clangdev 21.*
+    - llvmdev 21.*
+    - rapidjson
+  run:
+    - libclang-cpp21.1
+    - libllvm21
+
+tests:
+  - script:
+      - ccls --help
+
+about:
+  homepage: https://github.com/MaskRay/ccls
+  summary: C/C++/Objective-C language server
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - user202729
