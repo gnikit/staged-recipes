@@ -1,0 +1,40 @@
+{% set version = "15.9" %}
+
+package:
+  name: cscope
+  version: "{{ version }}"
+
+source:
+  url: https://downloads.sourceforge.net/project/cscope/cscope/v{{ version }}/cscope-{{ version }}.tar.gz
+  sha256: c5505ae075a871a9cd8d9801859b0ff1c09782075df281c72c23e72115d9f159
+
+build:
+  number: 0
+  skip: true  # [win]
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ stdlib('c') }}
+    - make
+    - autoconf
+    - automake
+    - libtool
+  host:
+    - ncurses
+
+test:
+  commands:
+    - cscope -V
+
+about:
+  home: https://cscope.sourceforge.net/
+  summary: Text screen based source browsing tool
+  description: |
+    Cscope is a text screen based source browsing tool.
+  license: BSD-3-Clause
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - user202729
