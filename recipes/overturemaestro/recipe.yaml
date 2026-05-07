@@ -58,8 +58,8 @@ tests:
         - pip
         - python ${{ python_min }}.*
     script:
-      - overturemaestro --help
-      - OvertureMaestro --help
+      - overturemaestro --help  # [unix]
+      - OvertureMaestro --help  # [unix]
       - overturemaestro places place --geom-filter-geocode Monaco
 
 about:
