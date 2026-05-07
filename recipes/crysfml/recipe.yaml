@@ -1,5 +1,5 @@
 context:
-  version: "0.6.1"
+  version: "0.6.2"
 
 package:
   name: crysfml
@@ -7,9 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/c/crysfml/crysfml-${{ version }}.tar.gz
-  sha256: 078a0b788abebf98659d0902d61f213ca177879dd64e3b7fc6781a5b5654909f
-  patches:
-    - 0001-win-ninja.patch
+  sha256: 93d6e4950aeb63bef959e019250df94a5504f210dfca9b0dc485fe3ee21686b4
 
 build:
   number: 0
