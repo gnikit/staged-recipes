@@ -1,4 +1,4 @@
-# This example shows how to define a recipe using the new YAML based recipe format introduced by 
+# This example shows how to define a recipe using the new YAML based recipe format introduced by
 # CEP 13.
 
 # For more information about this format see: https://prefix-dev.github.io/rattler-build/latest/reference/recipe_file/
@@ -56,11 +56,13 @@ requirements:
     - ${{ compiler('c') }}
     - ${{ stdlib('c') }}  # If you need any compiler, add the C standard library ("stdlib") too
   host:
-    - python
+    - python >=3.10
     - pip
-    - setuptools
+    # - setuptools
+    - hatchling
+    - hatch-vcs
   run:
-    - python
+    - python >=3.10
     - numpy
     - pyyaml
 
@@ -71,8 +73,10 @@ tests:
       imports:
       - ad_hoc_diffractometer
       - ad_hoc_diffractometer.geometries
-      # Also run `pip check` to verify the integrity 
+      # Also run `pip check` to verify the integrity
       pip_check: true
+  - script:
+      - python -c "import ad_hoc_diffractometer as ahd; assert ahd.list_geometries()"
 
 about:
   homepage: https://github.com/BCDA-APS/ad_hoc_diffractometer
