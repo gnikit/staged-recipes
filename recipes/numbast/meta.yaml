@@ -74,7 +74,7 @@ outputs:
         - ast_canopy >=0.5.0
         - cuda-version >=12.5,<14
         - cuda-nvrtc
-        - numba-cuda
+        - numba-cuda >=0.25.0
         - pyyaml
         - click
         - jinja2
