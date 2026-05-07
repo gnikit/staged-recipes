@@ -45,8 +45,6 @@ requirements:
     - llvm-openmp  # [osx]
     - libgomp  # [linux]
   run:
-    - llvm-openmp  # [osx]
-    - libgomp  # [linux]
     - python
     - numpy
     - scipy
