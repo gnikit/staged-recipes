@@ -39,9 +39,9 @@ tests:
   - script:
       - python -c "import ad_hoc_diffractometer as ahd; assert ahd.list_geometries()"
 
-  # - requirements:
-  #     run:
-  #       - python ${{ python_min }}.*
+    requirements:
+      run:
+        - python ${{ python_min }}.*
 
 about:
   homepage: https://github.com/BCDA-APS/ad_hoc_diffractometer
