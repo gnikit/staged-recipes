@@ -1,5 +1,3 @@
-# SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
 {% set number = 0 %}
 {% set name = "numbast" %}
 {% set version = "0.7.0" %}
@@ -70,11 +68,11 @@ outputs:
         - pip
         - setuptools
         - setuptools_scm
-        - {{ pin_subpackage('ast_canopy', exact=True) }}
+        - ast_canopy >=0.5.0
       run:
         - python
-        - {{ pin_subpackage('ast_canopy', exact=True) }}
-        - cuda-version >=12.5
+        - ast_canopy >=0.5.0
+        - cuda-version >=12.5,<14
         - cuda-nvrtc
         - numba-cuda
         - pyyaml
@@ -83,6 +81,8 @@ outputs:
     test:
       imports:
         - numbast
+      commands:
+        - python -m numbast --help
     about:
       home: https://github.com/NVIDIA/numbast
       summary: CUDA C++ to numba.cuda binding generator
