@@ -1,5 +1,4 @@
 context:
-  python_min: "3.9"
   version: "1.0.0"
   grep: ${{ 'grep -iE' if unix else 'findstr /c' }}
 
@@ -33,7 +32,9 @@ tests:
       imports:
         - jupyterlab_plugin_playground
       pip_check: true
-      python_version: ${{ python_min }}.*
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
   - script:
       - jupyter labextension list
       - jupyter labextension list 2>&1 | ${{ grep }} "@jupyterlab/plugin-playground"
