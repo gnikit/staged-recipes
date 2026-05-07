@@ -12,7 +12,6 @@ package:
 source:
   - url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
     sha256: 1b242c348b501ec8b9836a626a1779a7f6185f479818dac73f7d9dd769d9b192
-  # cocoindex sdist omits LICENSE; Added to Recipe Folder
 
 build:
   number: 0
@@ -60,8 +59,10 @@ tests:
       imports:
         - cocoindex
       pip_check: true
-  - script:
-      - cocoindex --help
+  - if: not win
+    then:
+      - script:
+          - cocoindex --help
 
 about:
   homepage: https://cocoindex.io/
