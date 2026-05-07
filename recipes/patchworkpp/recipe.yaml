@@ -1,0 +1,71 @@
+context:
+  version: "1.0.4"
+
+source:
+  url: https://github.com/url-kaist/patchwork-plusplus/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 0d3e3376bffd1cc0a206a391086c79e0ab5df8f1a247c79fdb8a22bd87129ed7
+
+outputs:
+  - package:
+      name: patchworkpp
+      version: ${{ version }}
+    build:
+      number: 0
+      script:
+        - cmake -S $SRC_DIR/cpp -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DUSE_SYSTEM_EIGEN3=ON -DINCLUDE_CPP_EXAMPLES=OFF
+        - cmake --build build --parallel $CPU_COUNT
+        - cmake --install build
+    requirements:
+      build:
+        - ${{ compiler('cxx') }}
+        - cmake
+        - ninja
+      host:
+        - eigen
+    tests:
+      - script:
+          - test -f $PREFIX/include/patchwork/patchworkpp.h
+          - test -f $PREFIX/lib/libground_seg_cores.a
+          - test -f $PREFIX/lib/cmake/patchworkpp/patchworkppConfig.cmake
+    about:
+      homepage: https://github.com/url-kaist/patchwork-plusplus
+      license: BSD-2-Clause
+      license_file: LICENSE
+      summary: Patchwork++ — fast and robust ground segmentation for 3D LiDAR point clouds (C++ library)
+      repository: https://github.com/url-kaist/patchwork-plusplus
+
+  - package:
+      name: pypatchworkpp
+      version: ${{ version }}
+    build:
+      number: 0
+      script:
+        - CMAKE_ARGS="-DUSE_SYSTEM_EIGEN3=ON" $PYTHON -m pip install $SRC_DIR/python --no-deps --no-build-isolation -vv
+    requirements:
+      build:
+        - ${{ compiler('cxx') }}
+        - cmake
+        - ninja
+      host:
+        - python
+        - pip
+        - scikit-build-core
+        - pybind11
+        - eigen
+      run:
+        - python
+        - numpy >=1.23
+    tests:
+      - python:
+          imports:
+            - pypatchworkpp
+    about:
+      homepage: https://github.com/url-kaist/patchwork-plusplus
+      license: BSD-2-Clause
+      license_file: LICENSE
+      summary: Patchwork++ — fast and robust ground segmentation for 3D LiDAR point clouds (Python bindings)
+      repository: https://github.com/url-kaist/patchwork-plusplus
+
+extra:
+  recipe-maintainers:
+    - rubenarts
