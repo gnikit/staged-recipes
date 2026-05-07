@@ -36,8 +36,6 @@ requirements:
     - openvkl
     - rkcommon ==1.14.0
     - tbb-devel
-  run:
-    - ${{ mpi if mpi != "nompi" }}
   run_exports:
     - ${{ pin_subpackage("ospray", upper_bound="x.x") }}
 
