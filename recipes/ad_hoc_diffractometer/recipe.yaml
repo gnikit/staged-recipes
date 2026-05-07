@@ -37,12 +37,12 @@ build:
   # Uncomment the following line if the package is pure Python and the recipe is exactly the same for all platforms.
   # It is okay if the dependencies are not built for all platforms/versions, although selectors are still not allowed.
   # See https://conda-forge.org/docs/maintainer/knowledge_base.html#noarch-python for more details.
-  # noarch: python
+  noarch: python
   # If the installation is complex, or different between Unix and Windows, use separate build.bat and build.sh files instead of this key.
   # By default, the package will be built for the Python versions supported by conda-forge and for all major OSs.
   # Uncomment the following lines to limit to Python 3.5 and newer (for example)
-  # skip:
-  #   - match(python, "<3.5")
+  skip:
+    - match(python, "<3.10")
   # or the following to limit to Windows.
   # skip:
   #   - win
@@ -56,13 +56,12 @@ requirements:
     - ${{ compiler('c') }}
     - ${{ stdlib('c') }}  # If you need any compiler, add the C standard library ("stdlib") too
   host:
-    - python >=3.10
+    - python
     - pip
-    # - setuptools
     - hatchling
     - hatch-vcs
   run:
-    - python >=3.10
+    - python
     - numpy
     - pyyaml
 
