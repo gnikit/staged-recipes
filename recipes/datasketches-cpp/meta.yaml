@@ -26,8 +26,8 @@ requirements:
 
 test:
   commands:
-    - test -f $PREFIX/include/DataSketches/version.hpp                  # [unix]
-    - if not exist %LIBRARY_INC%\\include\\DataSketches\\version.hpp    # [win]
+    - test -f $PREFIX/include/DataSketches/version.hpp                         # [unix]
+    - if not exist %LIBRARY_INC%\\include\\DataSketches\\version.hpp exit 1    # [win]
 
 about:
   home: https://datasketches.apache.org
