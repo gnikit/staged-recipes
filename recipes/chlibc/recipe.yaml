@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.1.3"
+  version: "0.1.5"
 
 package:
   name: "chlibc"
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://github.com/gzm55/chlibc/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 46d6bc9871e03c8296404520c74ab887347a5cab27d3c4d4ca9fa004499ec88d
+  sha256: 2b842c05585d0a0fa9713f7f171e224306e48cc80558bf73b7ef769d252a5c38
 
 build:
   skip: ${{ target_platform not in ["linux-64", "linux-aarch64"] }}
