@@ -22,4 +22,4 @@ cmake -S . -B build -G Ninja \
     -DOSPRAY_ENABLE_APPS_BENCHMARK=OFF \
     -DOSPRAY_INSTALL_DEPENDENCIES=OFF
 cmake --build build --parallel ${CPU_COUNT}
-cmake --install build
+cmake --install build --parallel ${CPU_COUNT}

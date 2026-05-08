@@ -26,5 +26,5 @@ if %ERRORLEVEL% neq 0 exit /b 1
 cmake --build build --parallel %CPU_COUNT%
 if %ERRORLEVEL% neq 0 exit /b 1
 
-cmake --install build
+cmake --install build --parallel %CPU_COUNT%
 if %ERRORLEVEL% neq 0 exit /b 1
