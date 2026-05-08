@@ -27,8 +27,8 @@ requirements:
     - ninja
   host:
     - ${{ mpi if mpi != "nompi" and mpi != "impi" }}
-    - ${{ impi-devel if mpi == "impi" }}
-    - ${{ snappy if mpi != "nompi" }}
+    - ${{ "impi-devel" if mpi == "impi" }}
+    - ${{ "snappy" if mpi != "nompi" }}
     - embree
     - openimagedenoise
     - openvkl
