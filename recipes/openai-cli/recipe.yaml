@@ -1,0 +1,63 @@
+context:
+  version: "1.1.2"
+
+package:
+  name: openai-cli
+  version: ${{ version }}
+
+source:
+  url: https://github.com/openai/openai-cli/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: f55120cfe943aed666881a264291bb09e5569be133682501cb31003758298934
+  target_directory: src
+
+build:
+  number: 0
+  script:
+    - cd src
+    - go-licenses save ./cmd/openai --save_path ../library_licenses
+    - if: unix
+      then:
+        - go build -v -o $PREFIX/bin/openai -ldflags="-s -w" ./cmd/openai
+        - mkdir -p $PREFIX/share/bash-completion/completions $PREFIX/share/fish/vendor_completions.d $PREFIX/share/zsh/site-functions
+        - $PREFIX/bin/openai @completion bash > $PREFIX/share/bash-completion/completions/openai
+        - $PREFIX/bin/openai @completion fish > $PREFIX/share/fish/vendor_completions.d/openai.fish
+        - $PREFIX/bin/openai @completion zsh > $PREFIX/share/zsh/site-functions/_openai
+      else:
+        - go build -v -o %LIBRARY_BIN%\openai.exe -ldflags="-s -w" ./cmd/openai
+
+requirements:
+  build:
+    - ${{ compiler("go-nocgo") }}
+    - go-licenses
+
+tests:
+  - script:
+      - openai --help
+      - openai --version
+  - package_contents:
+      bin:
+        - openai
+      files:
+        - if: unix
+          then:
+            - share/bash-completion/completions/openai
+            - share/fish/vendor_completions.d/openai.fish
+            - share/zsh/site-functions/_openai
+      strict: true
+
+about:
+  homepage: https://github.com/openai/openai-cli
+  summary: The official CLI for the OpenAI API
+  description: |
+    openai-cli is the official command line interface for working with the
+    OpenAI API.
+  license: Apache-2.0
+  license_file:
+    - src/LICENSE
+    - library_licenses/
+  documentation: https://developers.openai.com/api/docs
+  repository: https://github.com/openai/openai-cli
+
+extra:
+  recipe-maintainers:
+    - moritzwilksch
