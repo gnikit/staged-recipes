@@ -22,6 +22,12 @@ build:
   number: 0
   skip: is_abi3 and not is_python_min
   script:
+    - if: win
+      then:
+        # otherwise fails with:
+        #  path too long:
+        #    '%BUILD_PREFIX%/.cargo/git/checkouts/(~180 characters).snap'; class=Filesystem (30)
+        - set CARGO_HOME=c:\.cg
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
   python:
