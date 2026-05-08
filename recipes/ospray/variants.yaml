@@ -1,12 +1,9 @@
 mpi:
   - nompi
-  - if: linux or win
-    then:
-      - impi
   - if: unix
     then:
       - mpich
       - openmpi
   - if: win
     then:
-      - msmpi
+      - impi
