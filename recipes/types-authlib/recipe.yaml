@@ -27,11 +27,15 @@ requirements:
     - cryptography
 
 tests:
-  - python:
-      imports:
-        - authlib-stubs
-      pip_check: true
-      python_version: ${{ python_min }}.*
+  - requirements:
+      run:
+        - pip
+        - python ${{ python_min }}.*
+    script:
+      - pip check
+  - package_contents:
+      site_packages:
+        - authlib-stubs/__init__.pyi
 
 about:
   summary: Typing stubs for Authlib
