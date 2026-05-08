@@ -1,0 +1,89 @@
+context:
+  version: "3.3.3"
+
+package:
+  name: html-to-markdown-cli
+  version: ${{ version }}
+
+source:
+  url: https://github.com/kreuzberg-dev/html-to-markdown/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 8fdd12c0f44782e966cf8dc9919be3da0904371e9dac0eaaf378bcb7854783b9
+
+build:
+  number: 0
+  script:
+    env:
+      CARGO_PROFILE_RELEASE_LTO: fat
+      CARGO_PROFILE_RELEASE_STRIP: symbols
+    content:
+      - cd crates/html-to-markdown-cli
+      - if: unix
+        then:
+          - cargo auditable install --no-track --bins --root="$PREFIX" --path .
+          # generate manpage and shell completions
+          - mkdir -p "$PREFIX"/share/man/man1 "$PREFIX"/share/bash-completion/completions "$PREFIX"/share/fish/vendor_completions.d "$PREFIX"/share/zsh/site-functions
+          - '"$PREFIX"/bin/html-to-markdown --generate-man             > "$PREFIX"/share/man/man1/html-to-markdown.1'
+          - '"$PREFIX"/bin/html-to-markdown --generate-completion bash > "$PREFIX"/share/bash-completion/completions/html-to-markdown'
+          - '"$PREFIX"/bin/html-to-markdown --generate-completion fish > "$PREFIX"/share/fish/vendor_completions.d/html-to-markdown.fish'
+          - '"$PREFIX"/bin/html-to-markdown --generate-completion zsh  > "$PREFIX"/share/zsh/site-functions/_html-to-markdown'
+        else:
+          - cargo auditable install --no-track --bins --root="%LIBRARY_PREFIX%" --path .
+          # generate manpage and shell completions
+          - mkdir "%LIBRARY_PREFIX%"\share\man\man1
+          - mkdir "%LIBRARY_PREFIX%"\share\bash-completion\completions
+          - mkdir "%LIBRARY_PREFIX%"\share\fish\vendor_completions.d
+          - mkdir "%LIBRARY_PREFIX%"\share\zsh\site-functions
+          - '"%LIBRARY_BIN%"\html-to-markdown.exe --generate-man             > "%LIBRARY_PREFIX%"\share\man\man1\html-to-markdown.1'
+          - '"%LIBRARY_BIN%"\html-to-markdown.exe --generate-completion bash > "%LIBRARY_PREFIX%"\share\bash-completion\completions\html-to-markdown'
+          - '"%LIBRARY_BIN%"\html-to-markdown.exe --generate-completion fish > "%LIBRARY_PREFIX%"\share\fish\vendor_completions.d\html-to-markdown.fish'
+          - '"%LIBRARY_BIN%"\html-to-markdown.exe --generate-completion zsh  > "%LIBRARY_PREFIX%"\share\zsh\site-functions\_html-to-markdown'
+      - cargo-bundle-licenses --format=yaml --output=../../THIRDPARTY.yml
+      - if: unix
+        then:
+
+requirements:
+  build:
+    - ${{ stdlib('c') }}
+    - ${{ compiler('c') }}
+    - ${{ compiler('rust') }}
+    - cargo-auditable
+    - cargo-bundle-licenses
+
+tests:
+  - script:
+      - html-to-markdown --help
+      - html-to-markdown --version
+  - package_contents:
+      bin:
+        - html-to-markdown
+      files:
+        - if: unix
+          then:
+            - share/man/man1/html-to-markdown.1
+            - share/bash-completion/completions/html-to-markdown
+            - share/fish/vendor_completions.d/html-to-markdown.fish
+            - share/zsh/site-functions/_html-to-markdown
+        - if: win
+          then:
+            - Library/share/man/man1/html-to-markdown.1
+            - Library/share/bash-completion/completions/html-to-markdown
+            - Library/share/fish/vendor_completions.d/html-to-markdown.fish
+            - Library/share/zsh/site-functions/_html-to-markdown
+      strict: true
+
+about:
+  summary: A fast, powerful HTML to Markdown converter
+  description: |
+    Command-line interface for html-to-markdown, a high-performance
+    HTML to Markdown converter with comprehensive customization options.
+    Uses the html5ever parser for standards-compliant HTML processing.
+  license: MIT
+  license_file:
+    - LICENSE
+    - THIRDPARTY.yml
+  homepage: https://docs.html-to-markdown.kreuzberg.dev/
+  repository: https://github.com/kreuzberg-dev/html-to-markdown
+
+extra:
+  recipe-maintainers:
+    - salim-b
