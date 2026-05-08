@@ -12,7 +12,7 @@ source:
 build:
   number: 0
   script:
-    - go-licenses save ./cmd/openai --save_path ./library_licenses
+    - go-licenses save ./cmd/openai --save_path ./library_licenses --ignore github.com/mattn/go-localereader
     - if: unix
       then:
         - go build -v -o $PREFIX/bin/openai -ldflags="-s -w" ./cmd/openai
