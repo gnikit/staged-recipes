@@ -44,7 +44,7 @@ test:
 
 about:
   home: https://christophertkenny.com/flexoki/
-  home: https://github.com/christopherkenny/flexoki
+  dev_url: https://github.com/christopherkenny/flexoki
   license: MIT
   summary: Provides color palettes designed to be reminiscent of text on paper. The color schemes
     were taken from <https://stephango.com/flexoki>. Includes discrete, continuous,
