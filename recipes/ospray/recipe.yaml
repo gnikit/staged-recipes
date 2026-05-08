@@ -45,13 +45,25 @@ tests:
       lib:
         - ospray
   - script:
-      - ospTutorial
-      - test -f firstFrame.ppm
-      - test -f accumulatedFrame.ppm
-      - rm -f firstFrame.ppm accumulatedFrame.ppm
-      - ospTutorialCpp
-      - test -f firstFrame.ppm
-      - test -f accumulatedFrame.ppm
+      - if: unix
+        then: |
+          ospTutorial
+          test -f firstFrame.ppm
+          test -f accumulatedFrame.ppm
+          rm -f firstFrame.ppm accumulatedFrame.ppm
+          ospTutorialCpp
+          test -f firstFrame.ppm
+          test -f accumulatedFrame.ppm
+      - if: win
+        then: |
+          ospTutorial
+          if not exist firstFrame.ppm exit 1
+          if not exist accumulatedFrame.ppm exit 1
+          if exist firstFrame.ppm del firstFrame.ppm
+          if exist accumulatedFrame.ppm del accumulatedFrame.ppm
+          ospTutorialCpp
+          if not exist firstFrame.ppm exit 1
+          if not exist accumulatedFrame.ppm exit 1
 
 about:
   homepage: https://www.ospray.org
