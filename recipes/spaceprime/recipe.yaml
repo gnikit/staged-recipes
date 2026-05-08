@@ -24,7 +24,7 @@ requirements:
   run:
     - python
     - numpy
-    - msprime
+    - msprime >=1.4.1
     - libopenblas
     - rasterio >=1.0.0
     - scipy
