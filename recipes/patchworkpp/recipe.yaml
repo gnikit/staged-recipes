@@ -75,5 +75,6 @@ about:
   repository: https://github.com/url-kaist/patchwork-plusplus
 
 extra:
+  feedstock-name: patchworkpp
   recipe-maintainers:
-    - rubenarts
+    - ruben-arts
