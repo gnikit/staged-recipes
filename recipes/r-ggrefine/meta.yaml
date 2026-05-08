@@ -1,0 +1,65 @@
+{% set version = '0.4.0' %}
+{% set posix = 'm2-' if win else '' %}
+
+package:
+  name: r-ggrefine
+  version: {{ version|replace("-", "_") }}
+
+source:
+  url:
+    - {{ cran_mirror }}/src/contrib/ggrefine_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/ggrefine/ggrefine_{{ version }}.tar.gz
+  sha256: 2813e6090a730d12410a9c95cdc194e905b129dd214fe305fceec9f368af5781
+
+build:
+  number: 0
+  noarch: generic
+  rpaths:
+    - lib/R/lib/
+    - lib/
+  missing_dso_whitelist:
+    - '*/R.dll'        # [win]
+    - '*/Rblas.dll'    # [win]
+    - '*/Rlapack.dll'  # [win]
+
+requirements:
+  build:
+    - {{ posix }}zip               # [win]
+    - cross-r-base {{ r_base }}    # [build_platform != target_platform]
+  host:
+    - r-base
+    - r-blends
+    - r-flexoki
+    - r-ggplot2
+    - r-jumble
+    - r-rlang
+    - r-scales
+    - r-viridis
+  run:
+    - r-base
+    - r-blends
+    - r-flexoki
+    - r-ggplot2
+    - r-jumble
+    - r-rlang
+    - r-scales
+    - r-viridis
+
+test:
+  commands:
+    - $R -e "library('ggrefine')"           # [not win]
+    - "\"%R%\" -e \"library('ggrefine')\""  # [win]
+
+about:
+  home: https://github.com/davidhodge931/ggrefine, https://davidhodge931.github.io/ggrefine/
+  license: MIT
+  summary: Complete themes for publication-quality 'ggplot2' visualisation. Also provides functions
+    to modify these based on the positional axis scales and focus of a particular plot.
+  license_family: MIT
+  license_file:
+    - '{{ environ["PREFIX"] }}/lib/R/share/licenses/MIT'
+    - LICENSE
+
+extra:
+  recipe-maintainers:
+    - conda-forge/r
