@@ -26,10 +26,9 @@ requirements:
     - ispc
     - ninja
   host:
-    - if: mpi != "nompi"
-      then:
-        - ${{ mpi }}
-        - snappy
+    - ${{ mpi if mpi != "nompi" and mpi != "impi" }}
+    - ${{ impi-devel if mpi == "impi" }}
+    - ${{ snappy if mpi != "nompi" }}
     - embree
     - openimagedenoise
     - openvkl
