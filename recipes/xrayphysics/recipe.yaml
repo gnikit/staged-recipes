@@ -1,9 +1,12 @@
+context:
+  version: "1.2.1"
+
 recipe:
   name: xrayphysics-split
-  version: 1.2.1
+  version: ${{ version }}
 
 source:
-  url: https://github.com/kylechampley/XrayPhysics/archive/refs/tags/v1.2.1.zip
+  url: https://github.com/kylechampley/XrayPhysics/archive/refs/tags/v${{ version }}.zip
   sha256: D03AC5512413099694F7C0E4D47C516EFBBCF570C23490871142B9388EDDE4D6
   patches: 
     - 01-patch-dll-path.patch

@@ -1,6 +1,9 @@
+context:
+  version: "1.2.6"
+
 recipe:
   name: leapct-split
-  version: 1.2.6
+  version: ${{ version }}
 
 source:
   url: https://github.com/llnl/LEAP/archive/refs/tags/v${{ version }}.zip
