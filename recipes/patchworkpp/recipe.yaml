@@ -11,6 +11,7 @@ source:
   sha256: 0d3e3376bffd1cc0a206a391086c79e0ab5df8f1a247c79fdb8a22bd87129ed7
   patches:
     - patches/python-use-system-patchworkpp.patch
+    - patches/cpp-static-to-shared.patch
 
 build:
   number: ${{ build }}
@@ -32,10 +33,12 @@ outputs:
         - ninja
       host:
         - eigen
+      run_exports:
+        - ${{ pin_subpackage('patchworkpp', upper_bound='x.x') }}
     tests:
       - script:
           - test -f $PREFIX/include/patchwork/patchworkpp.h
-          - test -f $PREFIX/lib/libground_seg_cores.a
+          - test -f $PREFIX/lib/libground_seg_cores$SHLIB_EXT
           - test -f $PREFIX/lib/cmake/patchworkpp/patchworkppConfig.cmake
 
   - package:
