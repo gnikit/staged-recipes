@@ -52,8 +52,8 @@ tests:
           test -f accumulatedFrame.ppm
           rm -f firstFrame.ppm accumulatedFrame.ppm
           ospTutorialCpp
-          test -f firstFrame.ppm
-          test -f accumulatedFrame.ppm
+          test -f firstFrameCpp.ppm
+          test -f accumulatedFrameCpp.ppm
       - if: win
         then: |
           ospTutorial
@@ -62,8 +62,8 @@ tests:
           if exist firstFrame.ppm del firstFrame.ppm
           if exist accumulatedFrame.ppm del accumulatedFrame.ppm
           ospTutorialCpp
-          if not exist firstFrame.ppm exit 1
-          if not exist accumulatedFrame.ppm exit 1
+          if not exist firstFrameCpp.ppm exit 1
+          if not exist accumulatedFrameCpp.ppm exit 1
 
 about:
   homepage: https://www.ospray.org
