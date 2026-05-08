@@ -1,5 +1,5 @@
 context:
-  version: "1.2.6"
+  version: "1.26"
 
 recipe:
   name: leapct-split
