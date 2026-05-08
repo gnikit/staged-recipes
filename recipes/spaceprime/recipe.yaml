@@ -1,0 +1,62 @@
+context:
+  version: "0.0.6"
+  python_min: "3.11"
+
+package:
+  name: spaceprime
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/s/spaceprime/spaceprime-${{ version }}.tar.gz
+  sha256: 959c2385fa13fce8e24e712aab8d61db55beea1ee5cea2691b1a324be7935eeb
+
+build:
+  noarch: python
+  number: 0
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - hatchling >=1.12.0
+  run:
+    - python >=${{ python_min }}
+    - numpy
+    - msprime >=1.4.1
+    - libopenblas
+    - rasterio >=1.0.0
+    - scipy
+    - shapely
+    - geopandas
+    - scikit-allel
+    - dask >=2024.5.1
+    - contextily
+    - matplotlib-base
+    - folium
+    - mapclassify
+    - esda >=2.5.1
+    - libpysal >=4.10
+    - scikit-learn
+    - pandas
+
+tests:
+  - python:
+      imports:
+        - spaceprime
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
+      pip_check: true
+
+about:
+  homepage: https://github.com/connor-french/spaceprime
+  summary: A python package to facilitate spatially explicit coalescent modeling in msprime
+  license: MIT
+  license_file: LICENSE
+  documentation: https://connor-french.github.io/spaceprime
+  repository: https://github.com/connor-french/spaceprime
+
+extra:
+  recipe-maintainers:
+    - connor-french
