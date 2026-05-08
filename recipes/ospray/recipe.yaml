@@ -40,10 +40,26 @@ requirements:
 
 tests:
   - package_contents:
+      bin:
+        - if: mpi == "nompi"
+          then:
+            - ospTutorial
+            - ospTutorialCpp
+            - ospTutorialAsync
+          else:
+            - ospMPIDistribTutorial
+            - ospMPIDistribTutorialCpp
+            - ospMPIDistribTutorialAsync
       include:
         - ospray/ospray.h
+        - ospray/ospray_cpp.h
       lib:
         - ospray
+        - if: mpi != "nompi"
+          then:
+            - ospray_mpi_common
+            - ospray_module_mpi_offload
+            - ospray_module_mpi_distributed_cpu
   - script:
       - if: unix
         then: |
