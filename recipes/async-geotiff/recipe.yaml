@@ -1,0 +1,51 @@
+context:
+  version: "0.4.0"
+
+package:
+  name: async-geotiff
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/a/async-geotiff/async_geotiff-${{ version }}.tar.gz
+  sha256: 2386cc72e1e66cb36fdb296c6ef3100ba4c5e086950f0ce691f1a86d164fda7b
+
+build:
+  noarch: python
+  script: python -m pip install . --no-deps --no-build-isolation -vv
+  number: 0
+
+requirements:
+  host:
+    - python >=3.11
+    - pip
+    - uv-build >=0.8.8,<0.9.0
+  run:
+    - python >=3.11
+    - affine >=2.4.0
+    - async-tiff >=0.7.0
+    - defusedxml >=0.7.1
+    - numpy >=2.0
+    - pyproj >=3.3.0
+
+tests:
+  - python:
+      imports:
+        - async_geotiff
+      pip_check: true
+
+about:
+  homepage: https://github.com/developmentseed/async-geotiff
+  summary: Async GeoTIFF reader for Python
+  description: |
+    A fast, asynchronous reader for GeoTIFF and Cloud-Optimized GeoTIFF (COG)
+    formats built on Rust, offering a high-level Python API with NumPy
+    integration, performance optimization, and broad decompression support
+    without a GDAL dependency.
+  license: MIT
+  license_file: LICENSE
+  documentation: https://developmentseed.github.io/async-geotiff/
+  repository: https://github.com/developmentseed/async-geotiff
+
+extra:
+  recipe-maintainers:
+    - kylebarron
