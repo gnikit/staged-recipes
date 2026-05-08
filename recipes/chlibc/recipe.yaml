@@ -32,6 +32,7 @@ build:
       unset CMAKE_COLOR_DIAGNOSTICS
       export CC=clang
 
+      unset LD_RUN_PATH
       env
 
       cmake --fresh --preset conda-build ${CMAKE_ARGS} -U CMAKE_LINKER -U CMAKE_STRIP
