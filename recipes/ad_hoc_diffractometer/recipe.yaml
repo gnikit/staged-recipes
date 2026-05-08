@@ -1,16 +1,15 @@
 schema_version: 1
 
 context:
-  name: ad_hoc_diffractometer
   version: "0.10.1"
   python_min: "3.10"
 
 package:
-  name: ad_hoc_diffractometer
+  name: ad-hoc-diffractometer
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  url: https://pypi.org/packages/source/a/ad-hoc-diffractometer/ad_hoc_diffractometer-${{ version }}.tar.gz
   sha256: a7ba874fd30ede2e1d99fe532d0748def525aecab94104a9b3db0eba96bf2737
 
 build:
