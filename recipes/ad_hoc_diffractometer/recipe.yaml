@@ -33,7 +33,9 @@ tests:
       imports:
       - ad_hoc_diffractometer
       pip_check: true
-      python_version: ${{ python_min }}.*
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
 
   - script:
       - python -c "import ad_hoc_diffractometer as ahd; assert ahd.list_geometries()"
