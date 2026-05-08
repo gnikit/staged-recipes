@@ -1,0 +1,64 @@
+schema_version: 1
+
+context:
+  version: "0.10.1"
+  python_min: "3.10"
+
+package:
+  name: ad-hoc-diffractometer
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/a/ad-hoc-diffractometer/ad_hoc_diffractometer-${{ version }}.tar.gz
+  sha256: a7ba874fd30ede2e1d99fe532d0748def525aecab94104a9b3db0eba96bf2737
+
+build:
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - hatchling
+    - hatch-vcs
+  run:
+    - python >=${{ python_min }}
+    - numpy
+    - pyyaml
+
+tests:
+  - python:
+      imports:
+      - ad_hoc_diffractometer
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
+
+  - script:
+      - python -c "import ad_hoc_diffractometer as ahd; assert ahd.list_geometries()"
+
+    requirements:
+      run:
+        - python ${{ python_min }}.*
+
+about:
+  homepage: https://github.com/BCDA-APS/ad_hoc_diffractometer
+  summary: 'Describe any multi-circle diffractometer geometry and perform X-ray/neutron crystallography calculations'
+  description: |
+    ad_hoc_diffractometer provides a class-based description of
+    multi-circle diffractometer stages, demo geometries for common
+    synchrotron and laboratory instruments, crystallographic lattice
+    calculations, and a declarative YAML registry of geometries.
+
+  license: LicenseRef-ANL-Open-Source-License
+  license_family: BSD-4-Clause
+  license_file: LICENSE
+  documentation: https://BCDA-APS.github.io/ad_hoc_diffractometer
+  repository: https://github.com/BCDA-APS/ad_hoc_diffractometer
+
+extra:
+  recipe-maintainers:
+    - prjemian
