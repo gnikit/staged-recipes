@@ -1,14 +1,12 @@
-{% set name = "Mathics3-Scanner" %}
-{% set python_min = "3.11" %}
-{% set version = "10.0.0" %}
+{% set version = "10.0.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: mathics3-scanner
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/mathics3_scanner-{{ version }}.tar.gz
-  sha256: e9626e79a70018747e1c7c66a0dd5515e3f7da29a52e840dc2d1540943429f56
+  url: https://pypi.org/packages/source/M/Mathics3-Scanner/mathics3_scanner-{{ version }}.tar.gz
+  sha256: ff096599e3b04384d7056dc9068c00d14ad62c37c9dc6fa6d1639de49b59ab9d
 
 build:
   entry_points:
@@ -22,13 +20,13 @@ build:
 
 requirements:
   host:
-    - python {{ python_min }}.*
+    - python >=3.11
     - setuptools
     - pyyaml
     - click
     - pip
   run:
-    - python >={{ python_min }}
+    - python >=3.11
     - pyyaml
     - chardet
     - click
@@ -44,12 +42,12 @@ test:
     - mathics3-codeparser-tokenize --help
   requires:
     - pip
-    - python {{ python_min }}.*
+    - python
 
 about:
   home: https://mathics.org/
-  summary: Character Tables and Tokenizer for Mathics and the Wolfram Language.
-  license: GPL-3.0-or-later
+  summary: Character Tables and Tokenizer for Mathics3 and the Wolfram Language.
+  license: Apache-2.0
   license_file: COPYING.txt
 
 extra:
