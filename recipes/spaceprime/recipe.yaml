@@ -11,10 +11,9 @@ source:
   sha256: 959c2385fa13fce8e24e712aab8d61db55beea1ee5cea2691b1a324be7935eeb
 
 build:
+  noarch: python
   number: 0
   script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip:
-    - win
 
 requirements:
   host:
