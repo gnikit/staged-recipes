@@ -13,7 +13,7 @@ source:
 
 build:
   number: 0
-  skip: true  # [win or py>=313]
+  skip: true  # [win or py>=312]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -43,6 +43,7 @@ test:
   imports:
     - mmpose
   requires:
+    - mmcv * cpu_*  # [linux]
     - pytorch * cpu_*  # [linux]
     - torchvision * cpu_*  # [linux]
 
