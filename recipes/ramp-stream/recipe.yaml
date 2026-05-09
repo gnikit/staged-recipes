@@ -55,7 +55,9 @@ about:
   summary: System-level Thermohydraulics Code for reactor analysis using modular DAE coupling of components
   license: MIT
   license_file: LICENSE
-  homepage: https://pypi.org/project/ramp-stream/
+  homepage: https://github.com/ramp-nuclear/STREAM/
+  repository: https://github.com/ramp-nuclear/STREAM/
+  documentation: https://ramp-nuclear.github.io/STREAM/
 
 extra:
   recipe-maintainers:
