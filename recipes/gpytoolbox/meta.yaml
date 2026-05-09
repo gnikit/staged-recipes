@@ -14,6 +14,7 @@ source:
 
 build:
   number: 0
+  skip: true  # [python_impl == 'pypy']
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -28,6 +29,7 @@ requirements:
     - python      # [target_platform != build_platform]
     - setuptools  # [target_platform != build_platform]
     - wheel       # [target_platform != build_platform]
+    - libopengl-devel       # [linux]
     - xorg-libx11            # [linux]
     - xorg-xorgproto         # [linux]
   host:
@@ -36,6 +38,7 @@ requirements:
     - python
     - setuptools
     - wheel
+    - libopengl-devel       # [linux]
     - xorg-libx11            # [linux]
     - xorg-xorgproto         # [linux]
     - xorg-libxrandr         # [linux]
