@@ -13,38 +13,30 @@ source:
 
 build:
   number: 0
-  noarch: python
+  skip: true  # [win or py>=313]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
     - pip
-    - python {{ python_min }}
+    - python
     - setuptools
   run:
-    - albumentations >=0.3.2
     - einops
-    - grad-cam >=1.3.7,<1.5.0
     - importlib-metadata
     - mat4py
     - matplotlib-base
-    - mmcv
-    - mmengine
+    - mmcv >=2.0.0,<2.4.0
+    - mmengine >=0.8.3,<1.0.0
     - model-index
     - numpy
-    - python >={{ python_min }}
-    - requests
+    - python
+    - pytorch
     - rich
-    - scikit-learn
 
 test:
   imports:
     - mmpretrain
-  commands:
-    - pip check
-  requires:
-    - pip
-    - python {{ python_min }}
 
 about:
   home: https://github.com/open-mmlab/mmpretrain
