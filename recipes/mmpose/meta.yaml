@@ -42,6 +42,9 @@ requirements:
 test:
   imports:
     - mmpose
+  requires:
+    - pytorch * cpu_*  # [linux]
+    - torchvision * cpu_*  # [linux]
 
 about:
   home: https://github.com/open-mmlab/mmpose
