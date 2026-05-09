@@ -1,13 +1,12 @@
-{% set name = "mkgraticule_planet" %}
 {% set version = "0.5.1" %}
 {% set python_min = "3.9" %}
 
 package:
-  name: {{ name|lower }}
+  name: mkgraticule-planet
   version: {{ version }}
 
 source:
-  url: https://github.com/ryodohemmi/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  url: https://github.com/ryodohemmi/mkgraticule_planet/archive/refs/tags/v{{ version }}.tar.gz
   sha256: d0f311468bf7cd373ff815266322c243a5320bf203b2b5d472c44bc766ae7e06
 
 build:
