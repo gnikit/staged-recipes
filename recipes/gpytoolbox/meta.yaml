@@ -29,6 +29,7 @@ requirements:
     - setuptools  # [target_platform != build_platform]
     - wheel       # [target_platform != build_platform]
     - xorg-libx11            # [linux]
+    - xorg-xorgproto         # [linux]
   host:
     - packaging
     - pip
@@ -36,6 +37,7 @@ requirements:
     - setuptools
     - wheel
     - xorg-libx11            # [linux]
+    - xorg-xorgproto         # [linux]
     - xorg-libxrandr         # [linux]
     - xorg-libxinerama       # [linux]
     - xorg-libxcursor        # [linux]
