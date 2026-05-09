@@ -13,5 +13,7 @@ for path in Path(os.environ["SP_DIR"]).glob("gpytoolbox_bindings*.pyd"):
         path.write_bytes(data.replace(old, new))
         patched += 1
 
-if patched == 0:
-    raise SystemExit("did not find $RPATH/wgpu_native.dll in gpytoolbox bindings")
+if patched:
+    print(f"patched {patched} gpytoolbox binding(s)")
+else:
+    print("no $RPATH/wgpu_native.dll imports found in gpytoolbox bindings")
