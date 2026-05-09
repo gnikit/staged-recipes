@@ -24,10 +24,10 @@ requirements:
   run:
     - chumpy
     - json_tricks
-    - matplotlib
+    - matplotlib-base
     - munkres
     - numpy
-    - opencv-python
+    - opencv
     - pillow
     - python >={{ python_min }}
     - requests
