@@ -21,6 +21,8 @@ build:
     - "{{ PYTHON }} %RECIPE_DIR%\\repair_wgpu_import.py"  # [win]
     - install_name_tool -id @loader_path/libwgpu_native.dylib $SP_DIR/libwgpu_native.dylib  # [osx]
     - for ext in $SP_DIR/gpytoolbox_bindings*.so; do needed=$(otool -L "$ext" | awk '/libwgpu_native.dylib/ {print $1; exit}'); if [ -n "$needed" ]; then install_name_tool -change "$needed" @loader_path/libwgpu_native.dylib "$ext"; fi; done  # [osx]
+  missing_dso_whitelist:
+    - "$RPATH/wgpu_native.dll"  # [win]
 
 requirements:
   build:
