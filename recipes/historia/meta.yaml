@@ -27,7 +27,7 @@ requirements:
     - tqdm
     - rich-click
 
-tests:
+test:
   requires:
     - python {{ python_min }}
     - pytest
