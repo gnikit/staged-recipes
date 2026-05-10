@@ -1,23 +1,37 @@
-import torch
+import numpy as np
+from mmengine.structures import InstanceData
 
-from mmpose.models import build_backbone
-from mmpose.utils import register_all_modules
+from mmpose.structures import (PoseDataSample, bbox_xywh2xyxy, bbox_xyxy2cs,
+                               flip_keypoints)
 
 
-register_all_modules()
+bbox_xywh = np.array([[10.0, 20.0, 30.0, 40.0]], dtype=np.float32)
+bbox_xyxy = bbox_xywh2xyxy(bbox_xywh)
+np.testing.assert_allclose(bbox_xyxy, [[10.0, 20.0, 40.0, 60.0]])
 
-backbone = build_backbone(
-    {"type": "ResNet", "depth": 18, "out_indices": (0, 1, 2, 3)}
+center, scale = bbox_xyxy2cs(bbox_xyxy[0])
+np.testing.assert_allclose(center, [25.0, 40.0])
+np.testing.assert_allclose(scale, [30.0, 40.0])
+
+keypoints = np.array([[[1.0, 2.0], [8.0, 4.0]]], dtype=np.float32)
+visible = np.ones((1, 2, 1), dtype=np.float32)
+flipped, flipped_visible = flip_keypoints(
+    keypoints.copy(),
+    visible.copy(),
+    image_size=(10, 10),
+    flip_indices=[1, 0],
 )
-backbone.eval()
+np.testing.assert_allclose(flipped, [[[1.0, 4.0], [8.0, 2.0]]])
+np.testing.assert_allclose(flipped_visible, visible)
 
-with torch.no_grad():
-    outputs = backbone(torch.ones(1, 3, 32, 32))
+instances = InstanceData()
+instances.bboxes = bbox_xyxy
+instances.keypoints = keypoints
+instances.keypoints_visible = visible
 
-expected_shapes = [
-    (1, 64, 8, 8),
-    (1, 128, 4, 4),
-    (1, 256, 2, 2),
-    (1, 512, 1, 1),
-]
-assert [tuple(output.shape) for output in outputs] == expected_shapes
+sample = PoseDataSample(
+    gt_instances=instances,
+    metainfo={"img_shape": (10, 10), "input_size": (10, 10)},
+)
+assert "img_shape" in sample
+assert len(sample.gt_instances) == 1
