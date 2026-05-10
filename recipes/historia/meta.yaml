@@ -1,3 +1,4 @@
+{% set python_min = "3.10" %}
 {% set name = "historia" %}
 {% set version = "0.6.0" %}
 
@@ -12,7 +13,7 @@ source:
 build:
   number: 0
   noarch: python
-  script: {{ PYTHON }} -m pip install .  -vv --no-deps --no-build-isolation
+  script: {{ PYTHON }} -m pip install .  -vv
   entry_points:
    - historia = historia._cli:historia_cli
 
