@@ -2,21 +2,23 @@
 {% set version = "0.6.0" %}
 
 package:
-  name: historia
+  name: {{ name|lower }}
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/h/historia/historia-${{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 3e273055217611f6c4516fc81615ee09ba5b072ecf2aa5705e29b13c80b6b3cc
 
 build:
   number: 0
   noarch: python
-  script: python -m pip install .  -vv --no-deps --no-build-isolation
+  script: {{ PYTHON }} -m pip install .  -vv --no-deps --no-build-isolation
+  entry_points:
+   - historia = historia._cli:historia_cli
 
 requirements:
   host:
-    - python ${{ python_min }}.*
+    - python ${{ python_min }}
     - pip
     - hatchling
   run:
