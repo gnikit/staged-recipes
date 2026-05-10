@@ -40,14 +40,15 @@ test:
     - pytest
 
 about:
-  homepage: https://github.com/codycbakerphd/historia
+  home: https://github.com/codycbakerphd/historia
   summary: A command-line tool for backing up records of GitHub activity
   description: |
     A command-line tool for backing up records of GitHub activity for use in creating dashboard reports of work history.
   license: MIT
+  license_family: MIT
   license_file: LICENSE.txt
-  documentation: https://historia.readthedocs.io/
-  repository: https://github.com/codycbakerphd/historia
+  doc_url: https://historia.readthedocs.io/
+  dev_url: https://github.com/codycbakerphd/historia
 
 extra:
   recipe-maintainers:
