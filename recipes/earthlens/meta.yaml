@@ -1,3 +1,4 @@
+{% set python_min = "3.11" %}
 {% set name = "earthlens" %}
 {% set version = "0.4.0" %}
 
@@ -6,22 +7,22 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: f68aacf30428158d8bdc1a13e71666c419f360a14fdb1c2c56538e4ab986b5e9
+  url: https://github.com/serapeum-org/earthlens/archive/{{ version }}.tar.gz
+  sha256: 19b7f5a9ab751d039873b61921a6e46ad548d81408f625f8fa0fe8fc9347a08a
 
 build:
-  noarch: python
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
-    - python >=3.11,<4
+    - python {{ python_min }}
     - pip
     - setuptools >=80
     - wheel
   run:
-    - python >=3.11,<4
+    - python >={{ python_min }}
     - pyramids >=0.17.0
     - joblib >=1.2.0
     - loguru >=0.7.2
@@ -33,18 +34,19 @@ requirements:
     - tqdm >=4.66.0
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - earthlens
     - earthlens.aggregate
     - earthlens.base
     - earthlens.chirps
-  requires:
-    - pip
-  commands:
-    - pip check
 
 about:
   home: https://github.com/serapeum-org/earthlens
+  license: GPL-3.0-or-later
+  license_family: GPL
+  license_file: LICENSE.md
   summary: Remote sensing package for downloading satellite and climate data
   description: |
     earthlens is a Python package for downloading satellite and climate
@@ -59,11 +61,9 @@ about:
       * boto3 (for the ERA5-on-S3 backend)
       * cdsapi (for the ECMWF/CDS backend)
       * earthengine-api (for the Google Earth Engine backend)
-  license: GPL-3.0-or-later
-  license_family: GPL3
-  license_file: LICENSE.md
-  doc_url: https://serapeum-org.github.io/earthlens/
   dev_url: https://github.com/serapeum-org/earthlens
+  doc_url: https://serapeum-org.github.io/earthlens/
+  doc_source_url: https://github.com/serapeum-org/earthlens/main/README.md
 
 extra:
   recipe-maintainers:
