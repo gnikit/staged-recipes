@@ -1,7 +1,7 @@
 {% set version = "1.4.0" %}
 
 package:
-  name: occ_gordon
+  name: occ-gordon
   version: {{ version }}
 
 source:
