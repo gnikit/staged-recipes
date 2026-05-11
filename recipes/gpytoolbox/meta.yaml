@@ -71,17 +71,22 @@ requirements:
 test:
   imports:
     - gpytoolbox
+    - gpytoolbox.copyleft
+    - gpytoolbox_bindings
+    - gpytoolbox_bindings_copyleft
   commands:
     - pip check
+    - python -c "import gpytoolbox as gpy; v, f = gpy.regular_square_mesh(2); assert v.shape[1] == 2; assert f.shape[1] == 3"
   requires:
     - pip
 
 about:
   home: https://github.com/sgsellan/gpytoolbox
   summary: A collection of utility functions to prototype geometry processing research in python
-  license: MIT
+  license: MIT AND GPL-3.0-only
   license_file:
     - LICENSE.MIT
+    - LICENSE.GPL
     - ext/webgpu-distribution-headers/LICENSE.txt
 
 extra:
