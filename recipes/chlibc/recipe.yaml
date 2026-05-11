@@ -44,6 +44,7 @@ build:
 requirements:
   build:
     - ${{ compiler('c') }}
+    - ${{ stdlib('c') }}
     - clang
     - compiler-rt_${{ target_platform }}
     - lld
@@ -58,6 +59,7 @@ requirements:
   ignore_run_exports:
     from_package:
       - ${{ compiler('c') }} # do not depend on libgcc
+      - ${{ stdlib('c') }} # do not introduce __glibc version limit
 
 tests:
   - script:
