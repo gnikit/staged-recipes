@@ -56,7 +56,9 @@ tests:
       imports:
         - peaks
       pip_check: true
-      python_version: ${{ python_min }}.*
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
 
 about:
   summary: Python tools for analysis of angle-resolved photoemission and related spectroscopic data
