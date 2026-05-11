@@ -1,5 +1,5 @@
 {% set name = "trame-pyvista" %}
-{% set version = "2.11.8" %}
+{% set version = "0.1.1" %}
 
 
 package:
@@ -7,7 +7,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/t/trame-pyvista/trame_pyvista-{{ version }}.tar.gz
   sha256: 31dd408ab682f7e3915ba98afdb84b6f612384f3031d2828485a296f59dab6fe
 
 build:
