@@ -54,7 +54,7 @@ requirements:
 tests:
   - python:
       imports:
-        - peaks-arpes
+        - peaks
       pip_check: true
       python_version: ${{ python_min }}.*
 
