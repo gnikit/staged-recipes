@@ -1,0 +1,57 @@
+{% set version = "0.5.0" %}
+
+package:
+  name: geost
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/g/geost/geost-{{ version }}.tar.gz
+  sha256: 0f8aa9134f7efb98b8838acdab21065d830fd9a9d726751fd20880be8843d209
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.13,<3.15
+    - hatchling
+    - pip
+  run:
+    - python >=3.13,<3.15
+    - numpy
+    - pandas
+    - pyarrow
+    - lxml
+    - pooch
+    - pyproj
+    - geopandas
+    - xlrd
+    - openpyxl
+    - rioxarray
+    - shapely
+    - pyvista
+    - pydap
+    - platformdirs
+
+test:
+  imports:
+    - geost
+  commands:
+    - pip check
+  requires:
+    - pip
+    - python
+
+about:
+  home: https://github.com/Deltares-research/geost
+  summary: GeoST is a Python interface for subsurface data
+  license: LGPL-3.0-only
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - 151616115
+    - 158446885
+    - 147377923
