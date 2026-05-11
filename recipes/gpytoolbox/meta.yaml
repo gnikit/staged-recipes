@@ -31,6 +31,7 @@ build:
   skip: true  # [python_impl == 'pypy' or py>=313]
   script:
     - "{{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation"
+    - for lib in "${SP_DIR}"/gpytoolbox_bindings*.so; do old_path="$(otool -L "${lib}" | awk '/libwgpu_native[.]dylib/ {print $1; exit}')"; if [ -n "${old_path}" ]; then install_name_tool -change "${old_path}" "@rpath/libwgpu_native.dylib" "${lib}"; fi; done  # [osx]
 
 requirements:
   build:
