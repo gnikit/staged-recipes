@@ -8,21 +8,29 @@ package:
 source:
   - url: https://github.com/sgsellan/gpytoolbox/archive/v{{ version }}.tar.gz
     sha256: d944aa33b5506441f5907a15a2db3979c609563588cda1214b3245657c3eaf13
+    patches:
+      - patches/0001-use-conda-wgpu-native.patch
   - url: https://github.com/pybind/pybind11/archive/7c33cdc2d39c7b99a122579f53bc94c8eb3332ff.tar.gz
     sha256: bc5e33765f213097724a4172acf431201f8824956d7431538f3376a5b1139c2b
     folder: ext/pybind11
+  - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/webgpu.h
+    sha256: 09e3fca980bfbb880b26b0d7fbdfd9d284a3faa99942d198c7a208f9be7a0bfb
+    folder: ext/webgpu-distribution-headers/webgpu
+  - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/wgpu.h
+    sha256: a9310591ee1bc51928577f4140d12172b0257f253afce9838e53b665f0ee0d7f
+    folder: ext/webgpu-distribution-headers/webgpu
+  - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/webgpu.hpp
+    sha256: 61ab357865b9d7d765f46837fe651c0ebd84e4f3955a9bea084f962fa539de46
+    folder: ext/webgpu-distribution-headers/webgpu
+  - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/LICENSE.txt
+    sha256: 46f069fb0e448fb4d5e9e21b3483912495381399656fe7a1190541b7bf74f668
+    folder: ext/webgpu-distribution-headers
 
 build:
   number: 0
   skip: true  # [python_impl == 'pypy' or py>=313]
   script:
     - "{{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation"
-    - for ext in $SP_DIR/gpytoolbox_bindings*.so; do patchelf --set-rpath '$ORIGIN' "$ext"; if patchelf --print-needed "$ext" | grep -q '\$RPATH/libwgpu_native.so'; then patchelf --replace-needed '$RPATH/libwgpu_native.so' libwgpu_native.so "$ext"; fi; done  # [linux]
-    - "{{ PYTHON }} %RECIPE_DIR%\\repair_wgpu_import.py"  # [win]
-    - install_name_tool -id @loader_path/libwgpu_native.dylib $SP_DIR/libwgpu_native.dylib  # [osx]
-    - for ext in $SP_DIR/gpytoolbox_bindings*.so; do needed=$(otool -L "$ext" | awk '/libwgpu_native.dylib/ {print $1; exit}'); if [ -n "$needed" ]; then install_name_tool -change "$needed" @loader_path/libwgpu_native.dylib "$ext"; fi; done  # [osx]
-  missing_dso_whitelist:
-    - "$RPATH/wgpu_native.dll"  # [win]
 
 requirements:
   build:
@@ -31,7 +39,6 @@ requirements:
     - {{ stdlib("c") }}
     - cmake >=3.16,<3.27
     - make        # [linux]
-    - patchelf    # [linux]
     - packaging   # [target_platform != build_platform]
     - pip         # [target_platform != build_platform]
     - python      # [target_platform != build_platform]
@@ -53,6 +60,7 @@ requirements:
     - xorg-libxi             # [linux]
     - libxkbcommon           # [linux]
     - wayland                # [linux]
+    - wgpu-native 0.17.0.2
   run:
     - numpy >=1.22.4,<2.3
     - python
@@ -72,7 +80,9 @@ about:
   home: https://github.com/sgsellan/gpytoolbox
   summary: A collection of utility functions to prototype geometry processing research in python
   license: MIT
-  license_file: LICENSE.MIT
+  license_file:
+    - LICENSE.MIT
+    - ext/webgpu-distribution-headers/LICENSE.txt
 
 extra:
   recipe-maintainers:
