@@ -7,5 +7,5 @@ set CARGO_PROFILE_RELEASE_LTO=fat
 cargo-bundle-licenses --format yaml --output "%SRC_DIR%\THIRDPARTY.yml" || exit 1
 
 :: Build
-python -m pip install ducklake-python ^
+python -m pip install .\ducklake-python ^
     --no-deps --ignore-installed -vv --no-build-isolation --disable-pip-version-check
