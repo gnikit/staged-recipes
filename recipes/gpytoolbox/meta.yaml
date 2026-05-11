@@ -37,10 +37,6 @@ requirements:
     - python      # [target_platform != build_platform]
     - setuptools  # [target_platform != build_platform]
     - wheel       # [target_platform != build_platform]
-    - libgl-devel           # [linux]
-    - libopengl-devel       # [linux]
-    - xorg-libx11            # [linux]
-    - xorg-xorgproto         # [linux]
   host:
     - packaging
     - pip
