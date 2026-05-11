@@ -1,0 +1,65 @@
+context:
+  name: ducklake-sdk
+  version: "0.0.4"
+  python_min: 3.10.*
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  sha256: bded6bf90afc76db8a56bfc4c362c3543cdeaead57e485f414a0c204e3daddb1
+
+build:
+  number: 0
+  skip: not (match(python, python_min) and is_abi3)
+  python:
+    version_independent: true
+
+requirements:
+  build:
+    - if: build_platform != target_platform
+      then:
+        - python
+        - cross-python_${{ target_platform }}
+        - crossenv
+        - maturin >=1.7,<2
+    - ${{ compiler('rust') }}
+    - ${{ stdlib('c') }}
+    - cargo-bundle-licenses
+  host:
+    - python
+    - python-abi3
+    - pip
+    - maturin >=1.7,<2
+  run:
+    - python
+    - typing_extensions
+  ignore_run_exports:
+    from_package:
+      - cross-python_${{ target_platform }}
+  run_constraints:
+    - polars >=1.40
+    - sqlalchemy >=2
+
+tests:
+  - python:
+      python_version: ${{ python_min }}
+      imports:
+        - ducklake
+      pip_check: true
+
+about:
+  homepage: https://github.com/borchero/ducklake-sdk
+  summary: Python SDK to interact with DuckLake.
+  license: MIT
+  license_file:
+    - LICENSE
+    - THIRDPARTY.yml
+  documentation: https://ducklake-sdk.readthedocs.io/
+  repository: https://github.com/borchero/ducklake-sdk
+
+extra:
+  recipe-maintainers:
+    - borchero
