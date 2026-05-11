@@ -10,9 +10,6 @@ source:
     sha256: d944aa33b5506441f5907a15a2db3979c609563588cda1214b3245657c3eaf13
     patches:
       - patches/0001-use-conda-wgpu-native.patch
-  - url: https://github.com/pybind/pybind11/archive/7c33cdc2d39c7b99a122579f53bc94c8eb3332ff.tar.gz
-    sha256: bc5e33765f213097724a4172acf431201f8824956d7431538f3376a5b1139c2b
-    folder: ext/pybind11
   - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/webgpu.h
     sha256: 09e3fca980bfbb880b26b0d7fbdfd9d284a3faa99942d198c7a208f9be7a0bfb
     folder: ext/webgpu-distribution-headers/webgpu
@@ -49,6 +46,7 @@ requirements:
     - packaging
     - pip
     - python
+    - pybind11
     - setuptools
     - wheel
     - libgl-devel           # [linux]
@@ -60,6 +58,7 @@ requirements:
     - xorg-libxcursor        # [linux]
     - xorg-libxi             # [linux]
     - libxkbcommon           # [linux]
+    - nanoflann
     - wayland                # [linux]
     - wgpu-native 0.17.0.2
   run:

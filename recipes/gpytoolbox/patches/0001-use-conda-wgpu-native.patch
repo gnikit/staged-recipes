@@ -1,15 +1,48 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: conda-forge staged-recipes <conda-forge@users.noreply.github.com>
 Date: Mon, 11 May 2026 08:45:00 -0700
-Subject: [PATCH] Use conda-forge wgpu-native
+Subject: [PATCH] Use conda-forge build dependencies
 
 Avoid fetching WebGPU-distribution's prebuilt wgpu-native binaries during the
 build. The recipe provides the small C/C++ WebGPU headers as explicit hashed
 sources and links the extension against conda-forge's wgpu-native package.
+Also use conda-forge pybind11 and nanoflann instead of adding those projects as
+source copies.
 ---
+ CMakeLists.txt    |  6 +++---
  cmake/webgpu.cmake | 55 +++++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 48 insertions(+), 7 deletions(-)
+ 2 files changed, 51 insertions(+), 10 deletions(-)
 
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 46ba7e4..cdf4f49 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -47,6 +47,6 @@ target_include_directories(PoissonRecon INTERFACE "${CMAKE_BINARY_DIR}/_deps/poi
+ 
+ # Include nanoflann
+-include(nanoflann)
++find_package(nanoflann CONFIG REQUIRED)
+ 
+ # Include webgpu
+ include(webgpu)
+@@ -61,7 +61,7 @@ else()
+ endif()
+ 
+ # List of all libraries to link
+-set(LIBRARIES_TO_LINK igl::core igl::embree nanoflann PoissonRecon ${GL_LIBS})
++set(LIBRARIES_TO_LINK igl::core igl::embree nanoflann::nanoflann PoissonRecon ${GL_LIBS})
+ set(COPYLEFT_LIBRARIES_TO_LINK igl::core igl_copyleft::cgal)
+ 
+ add_library(cpytoolbox
+@@ -151,7 +151,7 @@ target_link_libraries(cpytoolbox_copyleft ${COPYLEFT_LIBRARIES_TO_LINK})
+ set(COPYLEFT_LIBRARIES_TO_LINK cpytoolbox_copyleft ${COPYLEFT_LIBRARIES_TO_LINK})
+ 
+ # Otman's python bindings using pybind11
+-add_subdirectory(./ext/pybind11/)
++find_package(pybind11 CONFIG REQUIRED)
+ pybind11_add_module(gpytoolbox_bindings
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/cpp/gpytoolbox_bindings_core.cpp"
+ 	"${CMAKE_CURRENT_SOURCE_DIR}/src/cpp/binding_read_obj.cpp"
 diff --git a/cmake/webgpu.cmake b/cmake/webgpu.cmake
 index 5bcd7a3..57f48af 100644
 --- a/cmake/webgpu.cmake
