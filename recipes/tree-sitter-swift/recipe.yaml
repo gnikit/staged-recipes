@@ -1,24 +1,36 @@
 schema_version: 1
 
 context:
-  version: "0.0.1"
+  version: "0.7.2"
+  # Upstream alex-pinkus/tree-sitter-swift checks in generated parser.c only under
+  # the `-with-generated-files` tag — the plain `0.7.2` tag is missing src/parser.c
+  # and won't build without running `tree-sitter generate`. PyPI's tree-sitter-swift
+  # is stuck at v0.0.1; use this GitHub tag for the actual current release.
+  tag: "0.7.2-with-generated-files"
 
 package:
   name: tree-sitter-swift
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/t/tree_sitter_swift/tree_sitter_swift-${{ version }}.tar.gz
-  sha256: d43b0baf413ba4b049f92eadc074805cb6403655c905d3af24f12fce1c9f561b
+  url: https://github.com/alex-pinkus/tree-sitter-swift/archive/refs/tags/${{ tag }}.tar.gz
+  sha256: b3ee119c2361e66b8c668052b4992c90ac9627cd8e016c7befdc500d0412ab77
 
 build:
   number: 0
+  # abi3 packages build once at python_min and ship one artifact per platform.
+  skip: is_abi3 and not is_python_min
   script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    version_independent: ${{ is_abi3 }}
 
 requirements:
   build:
     - ${{ compiler("c") }}
+    - ${{ stdlib("c") }}
   host:
+    - if: is_abi3
+      then: python-abi3
     - python
     - pip
     - setuptools >=42
@@ -29,13 +41,27 @@ tests:
   - python:
       imports:
         - tree_sitter_swift
+      # Verify the abi3 wheel works on the build-time Python AND the latest.
+      python_version:
+        - if: is_abi3
+          then: ${{ python_min }}.*
+        - "*"
+  - if: is_abi3
+    then:
+      requirements:
+        run:
+          - abi3audit
+      script:
+        - if: unix
+          then: abi3audit $SP_DIR/tree_sitter_swift/_binding.abi3.so -s -v --assume-minimum-abi3 ${{ python_min }}
+          else: abi3audit %SP_DIR%/tree_sitter_swift/_binding.pyd -s -v --assume-minimum-abi3 ${{ python_min }}
 
 about:
-  homepage: https://github.com/tree-sitter/tree-sitter-swift
+  homepage: https://github.com/alex-pinkus/tree-sitter-swift
   summary: Swift grammar for tree-sitter
   license: MIT
   license_file: LICENSE
-  repository: https://github.com/tree-sitter/tree-sitter-swift
+  repository: https://github.com/alex-pinkus/tree-sitter-swift
 
 extra:
   recipe-maintainers:
