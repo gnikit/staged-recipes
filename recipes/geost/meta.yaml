@@ -47,11 +47,20 @@ test:
 about:
   home: https://github.com/Deltares-research/geost
   summary: GeoST is a Python interface for subsurface data
+  description: |
+    The Geological Subsurface Toolbox (GeoST) package is designed to be an easy-to-use 
+    Python interface for working with subsurface data of The Netherlands, allowing you 
+    to integrate these data in your workflows for data analyses, modelling and 
+    visualisation. GeoST readily provides commonly used methods for e.g. 
+    spatial/conditional selections, conversions and data fusion, but at the same time 
+    remains fully flexible for advanced users to develop their own functions around 
+    GeoST data objects.
   license: LGPL-3.0-only
   license_file: LICENSE
+  doc_url: https://deltares-research.github.io/geost/
+  dev_url: https://github.com/Deltares-research/geost
 
 extra:
   recipe-maintainers:
     - 151616115
     - 158446885
-    - 147377923
