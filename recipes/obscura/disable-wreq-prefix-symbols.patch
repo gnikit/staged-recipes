@@ -1,11 +1,33 @@
 diff --git a/crates/obscura-net/Cargo.toml b/crates/obscura-net/Cargo.toml
-index 68bbb71..e04a683 100644
+index 68bbb71..c1889fa 100644
 --- a/crates/obscura-net/Cargo.toml
 +++ b/crates/obscura-net/Cargo.toml
-@@ -16,5 +16,5 @@ serde_json = { workspace = true }
+@@ -5,7 +5,7 @@ edition = "2024"
+ 
+ [features]
+ default = []
+-stealth = ["wreq", "wreq-util"]
++stealth = ["dep:wreq", "wreq-util"]
+ 
+ [dependencies]
+ anyhow = { workspace = true }
+@@ -16,5 +16,18 @@ serde_json = { workspace = true }
  tracing = { workspace = true }
  thiserror = { workspace = true }
  async-trait = "0.1"
 -wreq = { version = "6.0.0-rc.28", optional = true, features = ["prefix-symbols"] }
-+wreq = { version = "6.0.0-rc.28", optional = true }
  wreq-util = { version = "3.0.0-rc.10", optional = true }
++
++# Conda patch: this mirrors upstream PR #106, which is merged but not in v0.1.2:
++# https://github.com/h4ckf0r0day/obscura/pull/106
++# Drop this patch once obscura releases a version containing that PR.
++#
++# `prefix-symbols` avoids BoringSSL symbol clashes on Linux/Android, but
++# boring-sys2 does not support rewriting those static libraries on macOS.
++# Enabling it there generates prefixed bindings and unresolved
++# `build_script_main_*` symbols at link time.
++[target.'cfg(any(target_os = "linux", target_os = "android"))'.dependencies]
++wreq = { version = "6.0.0-rc.28", optional = true, features = ["prefix-symbols"] }
++
++[target.'cfg(not(any(target_os = "linux", target_os = "android")))'.dependencies]
++wreq = { version = "6.0.0-rc.28", optional = true }
