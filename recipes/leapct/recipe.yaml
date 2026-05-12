@@ -9,6 +9,11 @@ source:
   url: https://github.com/llnl/LEAP/archive/refs/tags/v${{ version }}.zip
   sha256: 331A1336C6B8F2F27812882CFAE35C8B6907194ED852BD81B30C8611A0E67614
   patches: 
+    # This patch is not upstream. What is does is overwrite the default search
+    # directory for the leapct shared library. This is necessary because Conda 
+    # on Windows installs shared .dlls to PYTHON_INSTALL_PREFIX/Library/bin. 
+    # This specific directory is unique to Conda Python installations, i.e. 
+    # without the patch, dll lookup fails and the library is unable to function.
     - 01-patch-dll-path.patch
 
 build:

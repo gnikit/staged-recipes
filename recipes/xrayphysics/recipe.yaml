@@ -9,6 +9,11 @@ source:
   url: https://github.com/kylechampley/XrayPhysics/archive/refs/tags/v${{ version }}.zip
   sha256: D03AC5512413099694F7C0E4D47C516EFBBCF570C23490871142B9388EDDE4D6
   patches: 
+    # This patch is not upstream. What is does is overwrite the default search
+    # directory for the leapct shared library. This is necessary because Conda 
+    # on Windows installs shared .dlls to PYTHON_INSTALL_PREFIX/Library/bin. 
+    # This specific directory is unique to Conda Python installations, i.e. 
+    # without the patch, dll lookup fails and the library is unable to function.
     - 01-patch-dll-path.patch
   
 build:
