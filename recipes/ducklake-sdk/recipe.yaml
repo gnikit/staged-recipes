@@ -1,14 +1,12 @@
 context:
-  name: ducklake-sdk
   version: "0.0.5"
-  python_min: 3.10.*
 
 package:
-  name: ${{ name }}
+  name: ducklake-sdk
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name | replace('-', '_') }}-${{ version }}.tar.gz
+  url: https://pypi.org/packages/source/d/ducklake-sdk/ducklake_sdk-${{ version }}.tar.gz
   sha256: bed8a46f955e712e407bb17c07ea552ca73c91d7a196fad17c3dc39e57557be7
 
 build:
@@ -50,6 +48,17 @@ tests:
       imports:
         - ducklake
       pip_check: true
+  - if: is_abi3
+    then:
+      script:
+        - if: win
+          then: abi3audit %PREFIX%/Lib/site-packages/ducklake/_native.abi3.pyd -s -v --assume-minimum-abi3 ${{ python_min }}
+          else:
+            - export SP_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
+            - abi3audit $SP_DIR/ducklake/_native.abi3.so -s -v --assume-minimum-abi3 ${{ python_min }}
+      requirements:
+        run:
+          - abi3audit
 
 about:
   homepage: https://github.com/borchero/ducklake-sdk
