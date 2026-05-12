@@ -32,7 +32,7 @@ requirements:
     - numpy
     - trimesh >=4.8.3
     - viser >=1.0.26
-    - pillow>=12.2.0
+    - pillow >=12.2.0
 
 tests:
   - python:
