@@ -8,12 +8,24 @@ package:
 source:
   url: https://github.com/h4ckf0r0day/obscura/archive/refs/tags/v${{ version }}.tar.gz
   sha256: afcfd3cf31e3e6e39536fe02bc793f1c413e4f2ce9d00c9bd3d1b392974dfd01
+  patches:
+    - disable-wreq-prefix-symbols.patch
 
 build:
   number: 0
   script:
     content:
-      - cargo auditable build --release --locked --package obscura-cli
+      - if: unix
+        then:
+          - export LIBCLANG_PATH=${BUILD_PREFIX}/lib
+          - export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=${CONDA_BUILD_SYSROOT} -isystem $(${CC} -print-file-name=include)"
+        else:
+          - set LIBCLANG_PATH=%BUILD_PREFIX%\Library\bin
+      - if: osx
+        then:
+          - export CFLAGS="${CFLAGS} -mlinker-version=100"
+          - export CXXFLAGS="${CXXFLAGS} -mlinker-version=100"
+      - cargo auditable build --release --locked --package obscura-cli --features stealth
       - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
       - if: unix
         then:
@@ -32,6 +44,8 @@ requirements:
     - ${{ stdlib('c') }}
     - cargo-auditable
     - cargo-bundle-licenses
+    - cmake
+    - libclang
     - perl
 
 tests:
