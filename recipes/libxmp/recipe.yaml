@@ -24,8 +24,8 @@ requirements:
 
 tests:
   - package_contents:
-      files:
-        - include/xmp.h
+      include:
+        - xmp.h
       lib:
         # windows uses unix naming
         - if: unix
