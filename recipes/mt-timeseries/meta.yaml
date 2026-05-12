@@ -1,0 +1,50 @@
+{% set version = "0.0.2" %}
+
+package:
+  name: mt-timeseries
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/m/mt-timeseries/mt_timeseries-{{ version }}.tar.gz
+  sha256: 650e0a30113955018d91991066d4c431160b705fa8f3c19c3a12e559592446f4
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.10
+    - setuptools >=45
+    - setuptools-scm >=6.2
+    - wheel
+    - pip
+  run:
+    - python >=3.10
+    - numpy
+    - scipy
+    - xarray
+    - pandas
+    - matplotlib-base
+    - loguru
+    - mt-metadata >=1.0.0
+
+test:
+  imports:
+    - mt_timeseries
+  commands:
+    - pip check
+  requires:
+    - pip
+    - python
+
+about:
+  home: https://github.com/kujaku11/mt-timeseries
+  summary: RunTS and ChannelTS containers and utilities for magnetotelluric time series
+  license: CC0-1.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kujaku11
