@@ -1,5 +1,5 @@
 context:
-  version: "0.1.1"
+  version: "0.1.2"
 
 package:
   name: obscura
@@ -7,14 +7,11 @@ package:
 
 source:
   url: https://github.com/h4ckf0r0day/obscura/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 9d5f08d6ac00325bbe7a07289e2a0bf385ca94ad2dd2d01f0476fff920e2a068
+  sha256: afcfd3cf31e3e6e39536fe02bc793f1c413e4f2ce9d00c9bd3d1b392974dfd01
 
 build:
   number: 0
   script:
-    env:
-      CARGO_PROFILE_RELEASE_STRIP: symbols
-      CARGO_PROFILE_RELEASE_LTO: fat
     content:
       - if: unix
         then:
@@ -26,7 +23,7 @@ build:
       - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
       - if: unix
         then:
-          - install -Dm755 "$(find target -path '*/release/obscura' -type f | head -n 1)" ${{ PREFIX }}/bin/obscura
+          - install -Dm755 target/*/release/obscura ${{ PREFIX }}/bin/obscura
         else:
           - for /d %%d in (target\*) do if exist %%d\release\obscura.exe copy %%d\release\obscura.exe %LIBRARY_BIN%\obscura.exe
 
