@@ -41,7 +41,6 @@ tests:
   - python:
       imports:
         - mmpretrain
-      pip_check: false  # mmcv expects PyPI dist "mmengine"; conda-forge mmengine installs mmengine-lite metadata.
   - script:
       - python run_test.py
     files:
