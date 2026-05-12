@@ -20,7 +20,7 @@ requirements:
     - cmake
     - ninja
   run_exports:
-    - ${{ pin_subpackage("libxmp", max_pin="x") }}
+    - ${{ pin_subpackage("libxmp", upper_bound="x") }}
 
 tests:
   - package_contents:
