@@ -37,7 +37,7 @@ test:
     - pip check
   requires:
     - pip
-    - python
+    - python >=3.10
 
 about:
   home: https://github.com/kujaku11/mt-timeseries
