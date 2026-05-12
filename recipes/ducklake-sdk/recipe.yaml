@@ -11,7 +11,7 @@ source:
 
 build:
   number: 0
-  skip: not (match(python, python_min) and is_abi3)
+  skip: is_abi3 and not is_python_min
   python:
     version_independent: true
 
@@ -29,7 +29,8 @@ requirements:
     - cargo-auditable
   host:
     - python
-    - python-abi3
+    - if: is_abi3
+      then: python-abi3
     - pip
     - maturin >=1.7,<2
   run:
@@ -44,7 +45,7 @@ requirements:
 
 tests:
   - python:
-      python_version: ${{ python_min }}
+      python_version: "${{ python_min ~ '.*' }}"
       imports:
         - ducklake
       pip_check: true
