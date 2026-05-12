@@ -28,6 +28,7 @@ requirements:
     - ${{ compiler('rust') }}
     - ${{ stdlib('c') }}
     - cargo-bundle-licenses
+    - cargo-auditable
   host:
     - python
     - python-abi3
