@@ -18,26 +18,17 @@ build:
   skip: win
   script:
     content:
-      - if: unix
-        then:
-          - export LIBCLANG_PATH=${BUILD_PREFIX}/lib
-          - export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=${CONDA_BUILD_SYSROOT} -isystem $(${CC} -print-file-name=include)"
-        else:
-          - set LIBCLANG_PATH=%BUILD_PREFIX%\Library\bin
+      - export LIBCLANG_PATH=${BUILD_PREFIX}/lib
+      - export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=${CONDA_BUILD_SYSROOT} -isystem $(${CC} -print-file-name=include)"
       - if: osx
         then:
           - export CFLAGS="${CFLAGS} -mlinker-version=100"
           - export CXXFLAGS="${CXXFLAGS} -mlinker-version=100"
       - cargo auditable build --release --locked --package obscura-cli --features stealth
       - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
-      - if: unix
-        then:
-          - mkdir -p ${{ PREFIX }}/bin
-          - install -m755 target/*/release/obscura ${{ PREFIX }}/bin/obscura
-          - install -m755 target/*/release/obscura-worker ${{ PREFIX }}/bin/obscura-worker
-        else:
-          - for /d %%d in (target\*) do if exist %%d\release\obscura.exe copy %%d\release\obscura.exe %LIBRARY_BIN%\obscura.exe
-          - for /d %%d in (target\*) do if exist %%d\release\obscura-worker.exe copy %%d\release\obscura-worker.exe %LIBRARY_BIN%\obscura-worker.exe
+      - mkdir -p ${{ PREFIX }}/bin
+      - install -m755 target/*/release/obscura ${{ PREFIX }}/bin/obscura
+      - install -m755 target/*/release/obscura-worker ${{ PREFIX }}/bin/obscura-worker
 
 requirements:
   build:
@@ -49,10 +40,7 @@ requirements:
     - cargo-bundle-licenses
     - cmake
     - libclang
-    - if: unix
-      then: make
-    - if: win
-      then: nasm
+    - make
     - perl
 
 tests:
