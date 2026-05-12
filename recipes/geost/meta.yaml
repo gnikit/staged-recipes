@@ -1,0 +1,67 @@
+{% set python_min = "3.13" %}
+{% set version = "0.5.0" %}
+
+package:
+  name: geost
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/g/geost/geost-{{ version }}.tar.gz
+  sha256: 0f8aa9134f7efb98b8838acdab21065d830fd9a9d726751fd20880be8843d209
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python {{ python_min }}
+    - hatchling
+    - pip
+  run:
+    - python >={{ python_min }}
+    - numpy
+    - pandas
+    - pyarrow
+    - lxml
+    - pooch
+    - pyproj
+    - geopandas
+    - xlrd
+    - openpyxl
+    - rioxarray
+    - shapely
+    - pyvista
+    - pydap
+    - platformdirs
+
+test:
+  imports:
+    - geost
+  commands:
+    - pip check
+  requires:
+    - pip
+    - python {{ python_min }}
+
+about:
+  home: https://github.com/Deltares-research/geost
+  summary: GeoST is a Python interface for subsurface data
+  description: |
+    The Geological Subsurface Toolbox (GeoST) package is designed to be an easy-to-use 
+    Python interface for working with subsurface data of The Netherlands, allowing you 
+    to integrate these data in your workflows for data analyses, modelling and 
+    visualisation. GeoST readily provides commonly used methods for e.g. 
+    spatial/conditional selections, conversions and data fusion, but at the same time 
+    remains fully flexible for advanced users to develop their own functions around 
+    GeoST data objects.
+  license: LGPL-3.0-only
+  license_file: LICENSE
+  doc_url: https://deltares-research.github.io/geost/
+  dev_url: https://github.com/Deltares-research/geost
+
+extra:
+  recipe-maintainers:
+    - erik-geo
+    - smknaake
