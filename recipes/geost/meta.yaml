@@ -1,3 +1,4 @@
+{% set python_min = "3.13" %}
 {% set version = "0.5.0" %}
 
 package:
@@ -15,11 +16,11 @@ build:
 
 requirements:
   host:
-    - python {{ 3.13 }}
+    - python {{ python_min }}
     - hatchling
     - pip
   run:
-    - python >={{ 3.13 }}
+    - python >={{ python_min }}
     - numpy
     - pandas
     - pyarrow
@@ -42,7 +43,7 @@ test:
     - pip check
   requires:
     - pip
-    - python {{ 3.13 }}
+    - python {{ python_min }}
 
 about:
   home: https://github.com/Deltares-research/geost
