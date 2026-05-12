@@ -48,6 +48,10 @@ requirements:
     - cargo-bundle-licenses
     - cmake
     - libclang
+    - if: unix
+      then: make
+    - if: win
+      then: nasm
     - perl
 
 tests:
