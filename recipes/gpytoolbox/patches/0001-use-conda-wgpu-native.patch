@@ -4,10 +4,11 @@ Date: Mon, 11 May 2026 08:45:00 -0700
 Subject: [PATCH] Use conda-forge build dependencies
 
 Avoid fetching WebGPU-distribution's prebuilt wgpu-native binaries during the
-build. The recipe provides the small C/C++ WebGPU headers as explicit hashed
-sources and links the extension against conda-forge's wgpu-native package.
-Also use conda-forge pybind11 and nanoflann instead of adding those projects as
-source copies.
+build. The recipe provides matching C/C++ WebGPU headers as explicit hashed
+sources because the current conda-forge WebGPU C headers are not
+source-compatible with this generated wrapper, and links the extension against
+conda-forge's wgpu-native package. Also use conda-forge pybind11 and nanoflann
+instead of adding those projects as source copies.
 ---
  CMakeLists.txt    |  6 +++---
  cmake/webgpu.cmake | 55 +++++++++++++++++++++++++++++++++++++++++++++---------

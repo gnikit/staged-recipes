@@ -10,6 +10,8 @@ source:
     sha256: d944aa33b5506441f5907a15a2db3979c609563588cda1214b3245657c3eaf13
     patches:
       - patches/0001-use-conda-wgpu-native.patch
+  # These C headers must match the generated C++ wrapper below. The current
+  # conda-forge WebGPU C headers are source-incompatible with this wrapper.
   - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/webgpu.h
     sha256: 09e3fca980bfbb880b26b0d7fbdfd9d284a3faa99942d198c7a208f9be7a0bfb
     folder: ext/webgpu-distribution-headers/webgpu
@@ -28,7 +30,6 @@ build:
   skip: true  # [python_impl == 'pypy' or py>=313]
   script:
     - "{{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation"
-    - for lib in "${SP_DIR}"/gpytoolbox_bindings*.so; do old_path="$(otool -L "${lib}" | awk '/libwgpu_native[.]dylib/ {print $1; exit}')"; if [ -n "${old_path}" ]; then install_name_tool -change "${old_path}" "@rpath/libwgpu_native.dylib" "${lib}"; fi; done  # [osx]
 
 requirements:
   build:
@@ -60,6 +61,8 @@ requirements:
     - libxkbcommon           # [linux]
     - nanoflann
     - wayland                # [linux]
+    # gpytoolbox v0.3.4's generated WebGPU wrapper matches this runtime.
+    # Newer 0.17.x headers remove or rename APIs used by upstream.
     - wgpu-native 0.17.0.2
   run:
     - numpy >=1.22.4,<2.3
