@@ -50,11 +50,8 @@ tests:
 
 about:
   summary: Cross-platform database connection management tool supporting multiple database types (Oracle, PostgreSQL, SQL Server, MySQL, SQLite, GBase 8s)
-  # readme
-  # readme
   license: MIT
-  # readme
-  license_file: LICENSE.txt  # readme
+  license_file: LICENSE.txt
   homepage: https://github.com/wangquanqing/db-connector-tool
   repository: https://github.com/wangquanqing/db-connector-tool/tree/main/src
   documentation: https://github.com/wangquanqing/db-connector-tool
