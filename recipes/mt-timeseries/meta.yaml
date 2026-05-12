@@ -28,6 +28,7 @@ requirements:
     - pandas
     - matplotlib-base
     - loguru
+    - email-validator
     - mt-metadata >=1.0.0
 
 test:
@@ -38,6 +39,7 @@ test:
   requires:
     - pip
     - python >=3.10
+    - email-validator
 
 about:
   home: https://github.com/kujaku11/mt-timeseries
