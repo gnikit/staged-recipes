@@ -53,6 +53,7 @@ tests:
         - nodeenv
 
 about:
+  homepage: https://github.com/mujocolab/mjviser
   license: Apache-2.0
   license_file: LICENSE
   repository: https://github.com/mujocolab/mjviser
