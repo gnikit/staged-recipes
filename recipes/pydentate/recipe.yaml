@@ -36,7 +36,9 @@ tests:
       imports:
         - pydentate
       pip_check: true
-      python_version: ${{ python_min }}.*
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
 
 about:
   summary: Graph Neural Networks for Predicting Metal-Ligand Coordination in Transition Metal Complexes
