@@ -15,8 +15,6 @@ build:
   number: 0
   skip:
     - win
-    # mmcv py312 builds still carry old Python metadata that breaks pip check.
-    - match(python, ">=3.12")
   script: python -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
