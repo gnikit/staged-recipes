@@ -1,25 +1,27 @@
-{% set version = "1.1.4" %}
+schema_version: 1
+
+context:
+  version: 1.1.4
 
 package:
   name: pydentate
-  version: {{ version }}
+  version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/p/pydentate/pydentate-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/p/pydentate/pydentate-${{ version }}.tar.gz
   sha256: ebecb7d4bc6607c31a0b2459139c6136e3388376d1d03da3efd2604872f6ef12
 
 build:
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
-    - python {{ python_min }}
+    - python ${{ python_min }}.*
     - pip
-    - setuptools
   run:
-    - python >={{ python_min }},<3.13
+    - python >=${{ python_min }},<3.13
     - pandas >=1.5.3
     - numpy >=1.24.1
     - pytorch >=2.1.0
@@ -28,20 +30,18 @@ requirements:
     - jupyter >=1.1.1
     - pip >=22.3.1
 
-test:
-  imports:
-    - pydentate
-  commands:
-    - pip check
-  requires:
-    - pip
-    - python {{ python_min }}
+tests:
+  - python:
+      imports:
+        - pydentate
+      pip_check: true
+      python_version: ${{ python_min }}.*
 
 about:
-  home: https://pypi.org/project/pydentate/
   summary: Graph Neural Networks for Predicting Metal-Ligand Coordination in Transition Metal Complexes
   license: MIT
   license_file: LICENSE
+  homepage: https://pypi.org/project/pydentate/
 
 extra:
   recipe-maintainers:
