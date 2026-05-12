@@ -12,8 +12,6 @@ source:
 build:
   number: 0
   script: build
-  run_exports:
-    - ${{ pin_subpackage("libxmp", "x") }}
 
 requirements:
   build:
@@ -21,6 +19,8 @@ requirements:
     - ${{ compiler('c') }}
     - cmake
     - ninja
+  run_exports:
+    - ${{ pin_subpackage("libxmp", max_pin="x") }}
 
 tests:
   - package_contents:
