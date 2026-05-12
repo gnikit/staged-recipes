@@ -13,19 +13,16 @@ build:
   number: 0
   script:
     content:
-      - if: unix
-        then:
-          - export LIBCLANG_PATH=${BUILD_PREFIX}/lib
-          - export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=${CONDA_BUILD_SYSROOT} -isystem $(${CC} -print-file-name=include)"
-        else:
-          - set LIBCLANG_PATH=%BUILD_PREFIX%\Library\bin
-      - cargo auditable build --release --locked --package obscura-cli --bin obscura --features stealth
+      - cargo auditable build --release --locked --package obscura-cli
       - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
       - if: unix
         then:
-          - install -Dm755 target/*/release/obscura ${{ PREFIX }}/bin/obscura
+          - mkdir -p ${{ PREFIX }}/bin
+          - install -m755 target/*/release/obscura ${{ PREFIX }}/bin/obscura
+          - install -m755 target/*/release/obscura-worker ${{ PREFIX }}/bin/obscura-worker
         else:
           - for /d %%d in (target\*) do if exist %%d\release\obscura.exe copy %%d\release\obscura.exe %LIBRARY_BIN%\obscura.exe
+          - for /d %%d in (target\*) do if exist %%d\release\obscura-worker.exe copy %%d\release\obscura-worker.exe %LIBRARY_BIN%\obscura-worker.exe
 
 requirements:
   build:
@@ -35,8 +32,6 @@ requirements:
     - ${{ stdlib('c') }}
     - cargo-auditable
     - cargo-bundle-licenses
-    - cmake
-    - libclang
     - perl
 
 tests:
@@ -45,6 +40,7 @@ tests:
   - package_contents:
       bin:
         - obscura
+        - obscura-worker
       strict: true
 
 about:
