@@ -1,0 +1,9 @@
+mpi:
+  - nompi
+  - if: unix
+    then:
+      - mpich
+      - openmpi
+  - if: win
+    then:
+      - impi
