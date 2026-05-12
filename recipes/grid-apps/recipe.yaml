@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: "grid-apps"
-  version: "0.1.0"  # This will be replaced by the actual version in the build process
+  version: "0.1.0"  
   module_name: ${{ name|lower|replace("-", "_") }}
 
 package:
