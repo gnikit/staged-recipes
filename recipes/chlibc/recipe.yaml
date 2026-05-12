@@ -21,36 +21,27 @@ build:
   script:
     content: |
       unset CFLAGS
-      unset AR
-      unset AS
-      unset LD
       unset LDFLAGS
-      unset LDFLAGS_LD
-      unset OBJCOPY
-      unset READELF
-      unset STRIP
-      unset CMAKE_COLOR_DIAGNOSTICS
-      export CC=clang
-
       unset LD_RUN_PATH
+
       env
 
       cmake --fresh --preset conda-build ${CMAKE_ARGS} -U CMAKE_LINKER -U CMAKE_STRIP
       cmake --build --preset conda-build --parallel ${CPU_COUNT}
       cmake --install build/conda-build
 
-      sha256sum "$PREFIX/bin/chlibc"
-
 requirements:
   build:
     - ${{ compiler('c') }}
     - ${{ stdlib('c') }}
-    - clang
+
+    - cmake >=4.2
+    - ninja
+
     - compiler-rt_${{ target_platform }}
     - lld
     - llvm-tools
-    - cmake >=4.2
-    - ninja
+
     - clang-tools
   host:
   run:
