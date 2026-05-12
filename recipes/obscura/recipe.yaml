@@ -9,6 +9,8 @@ source:
   url: https://github.com/h4ckf0r0day/obscura/archive/refs/tags/v${{ version }}.tar.gz
   sha256: afcfd3cf31e3e6e39536fe02bc793f1c413e4f2ce9d00c9bd3d1b392974dfd01
   patches:
+    # Mirrors upstream PR #106, merged but not yet in v0.1.2:
+    # https://github.com/h4ckf0r0day/obscura/pull/106
     - disable-wreq-prefix-symbols.patch
 
 build:
