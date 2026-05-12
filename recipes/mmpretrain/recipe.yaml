@@ -41,7 +41,6 @@ tests:
   - python:
       imports:
         - mmpretrain
-      pip_check: false
   - script:
       - python run_test.py
     files:
