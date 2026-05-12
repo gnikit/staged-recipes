@@ -15,10 +15,10 @@ build:
 
 requirements:
   host:
-    - python >=3.10,<3.13
+    - python {{ python_min }}
     - pip
   run:
-    - python >=3.10,<3.13
+    - python >={{ python_min }},<3.13
     - pandas >=1.5.3
     - numpy >=1.24.1
     - pytorch >=2.1.0
@@ -34,7 +34,7 @@ test:
     - pip check
   requires:
     - pip
-    - python
+    - python {{ python_min }}
 
 about:
   home: https://pypi.org/project/pydentate/
