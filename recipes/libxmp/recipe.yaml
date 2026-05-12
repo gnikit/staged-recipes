@@ -24,8 +24,13 @@ requirements:
 
 tests:
   - package_contents:
+      files:
+        - include/xmp.h
       lib:
-        - xmp
+        # windows uses unix naming
+        - if: unix
+          then: xmp
+          else: libxmp
 
 about:
   homepage: https://github.com/libxmp/libxmp
