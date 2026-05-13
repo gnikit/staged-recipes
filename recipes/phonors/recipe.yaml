@@ -1,13 +1,12 @@
 context:
-  name: phonors
   version: "0.1.0"
 
 package:
-  name: ${{ name }}
+  name: phonors
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  url: https://pypi.org/packages/source/p/phonors/phonors-${{ version }}.tar.gz
   sha256: 79635ca7b226790b81767f516cf53047a49c24bd187cedb23d88774e462cdf47
 
 build:
