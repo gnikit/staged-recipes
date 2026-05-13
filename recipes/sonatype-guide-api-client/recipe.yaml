@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
+
+context:
+  version: "0.1.0"
+  python_check_max: "3.14"
+
+package:
+  name: sonatype-guide-api-client
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/s/sonatype-guide-api-client/sonatype_guide_api_client-${{ version }}.tar.gz
+  sha256: 3e1fa5d01df19a4dc59831f68e7e17f24a5cc8e0b5278e3042e4c497ea585c85
+
+build:
+  number: 0
+  noarch: python
+  script:
+    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
+
+requirements:
+  host:
+    - pip
+    - poetry-core
+    - python ${{ python_min }}.*
+  run:
+    - pydantic >=2
+    - python >=${{ python_min }}
+    - python-dateutil >=2.8.2
+    - typing_extensions >=4.7.1
+    - urllib3 >=2.1.0,<3.0.0
+
+tests:
+  - python:
+      imports: sonatype_guide_api_client
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - ${{ python_check_max }}.*
+
+about:
+  summary: Sonatype Guide API
+  license: Apache-2.0
+  license_file: LICENSE
+  homepage: https://pypi.org/project/sonatype-guide-api-client
+  repository: https://github.com/sonatype-nexus-community/sonatype-guide-api-client
+
+extra:
+  recipe-maintainers:
+    - bollwyvl

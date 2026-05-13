@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
+
+context:
+  version: "0.201.0"
+  python_check_max: "3.14"
+
+package:
+  name: sonatype-iq-api-client
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/s/sonatype-iq-api-client/sonatype_iq_api_client-${{ version }}.tar.gz
+  sha256: b13de8ad59a7a6efd8e1376fa9f3387ba80832162ed1fdc715a025a2c28f5fa1
+
+build:
+  number: 0
+  noarch: python
+  script:
+    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
+
+requirements:
+  host:
+    - pip
+    - poetry-core
+    - python ${{ python_min }}.*
+    - setuptools
+  run:
+    - pydantic >=2
+    - python >=${{ python_min }}
+    - python-dateutil >=2.8.2
+    - typing_extensions >=4.7.1
+    - urllib3 >=2.1.0,<3.0.0
+
+tests:
+  - python:
+      imports:
+        - sonatype_iq_api_client
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - ${{ python_check_max }}.*
+
+about:
+  summary: Sonatype Lifecycle Public REST API
+  license: Apache-2.0
+  license_file: LICENSE
+  homepage: https://pypi.org/project/sonatype-iq-api-client
+  repository: https://github.com/sonatype-nexus-community/nexus-iq-api-client
+
+extra:
+  recipe-maintainers:
+    - bollwyvl
