@@ -14,7 +14,7 @@ build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   noarch: python
   number: 0
-  skip: true  # [py<311]
+
 
 
 requirements:
@@ -23,7 +23,7 @@ requirements:
     - setuptools >=61.0
     - pip
   run:
-    - python
+    - python >={{ python_min }}
     - pyproj >=1.9.6
     - numpy >=2.2.3
     - scipy ==1.15.2
