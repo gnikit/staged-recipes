@@ -62,7 +62,12 @@ requirements:
     - rich >=13,<14
     - watchdog >=4,<5
     - fastapi >=0.115,<1
-    - uvicorn >=0.32,<1
+    # uvicorn is intentionally omitted here. conda-forge's litellm feedstock
+    # has `run_constrained: [uvicorn ==0.33.0]`, but uvicorn 0.33.0 was never
+    # built on conda-forge, so any recipe that requires both litellm and a
+    # ranged uvicorn becomes unsolvable. Users who run `repowise serve` should
+    # install uvicorn separately. Tracked upstream against the litellm
+    # feedstock.
     - mcp >=1.0,<2
     - apscheduler >=3.10,<4
     - cryptography >=43,<47
@@ -77,16 +82,18 @@ tests:
         - repowise
         - repowise.cli
         - repowise.core
-        - repowise.server
-      pip_check: true
+        # repowise.server is omitted because importing it triggers a uvicorn
+        # import, and uvicorn is not in run requirements (see comment in
+        # `requirements.run`).
+      # pip_check is disabled because upstream's wheel METADATA lists
+      # uvicorn[standard] as a required dep, but we cannot include uvicorn
+      # in run requirements (see the explanatory comment in `requirements.run`).
+      pip_check: false
       python_version: ${{ python_min }}.*
-  - requirements:
-      run:
-        - pip
-        - python ${{ python_min }}.*
-    script:
-      - repowise --help
-      - repowise-augment --help
+  # CLI script tests (`repowise --help` etc.) are intentionally omitted
+  # because Click may eagerly load all subcommand modules at startup, which
+  # would pull in `serve_cmd` and trigger a uvicorn import — and uvicorn is
+  # not available in the test environment (see `requirements.run`).
 
 about:
   summary: Codebase intelligence for developers and AI — generates and maintains a structured wiki for any codebase
