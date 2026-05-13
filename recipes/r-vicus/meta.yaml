@@ -1,0 +1,58 @@
+{% set version = '0.99.0' %}
+{% set posix = 'm2-' if win else '' %}
+
+package:
+  name: r-vicus
+  version: {{ version|replace("-", "_") }}
+
+source:
+  url:
+    - {{ cran_mirror }}/src/contrib/Vicus_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/Vicus/Vicus_{{ version }}.tar.gz
+  sha256: 0400b5ea8f0d54d71db1a9c1df65c5abefb5607b99247bf7da40d747c6af9bb8
+
+build:
+  number: 0
+  noarch: generic
+  rpaths:
+    - lib/R/lib/
+    - lib/
+  missing_dso_whitelist:
+    - '*/R.dll'        # [win]
+    - '*/Rblas.dll'    # [win]
+    - '*/Rlapack.dll'  # [win]
+
+requirements:
+  build:
+    - {{ posix }}zip               # [win]
+    - cross-r-base {{ r_base }}    # [build_platform != target_platform]
+  host:
+    - r-base
+    - r-matrix
+    - r-rann
+    - r-rspectra
+  run:
+    - r-base
+    - r-matrix
+    - r-rann
+    - r-rspectra
+
+test:
+  commands:
+    - $R -e "library('Vicus')"           # [not win]
+    - "\"%R%\" -e \"library('Vicus')\""  # [win]
+
+about:
+  home: https://github.com/rikenbit/Vicus
+  license: MIT
+  summary: Compared with the similar graph embedding method such as Laplacian Eigenmaps, 'Vicus'
+    can exploit more local structures of graph data. For the details of the methods,
+    see the reference section of 'GitHub' README.md <https://github.com/rikenbit/Vicus>.
+  license_family: MIT
+  license_file:
+    - '{{ environ["PREFIX"] }}/lib/R/share/licenses/MIT'
+    - LICENSE
+
+extra:
+  recipe-maintainers:
+    - conda-forge/r
