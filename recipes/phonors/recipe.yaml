@@ -1,0 +1,53 @@
+context:
+  version: "0.1.0"
+
+package:
+  name: phonors
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/p/phonors/phonors-${{ version }}.tar.gz
+  sha256: 79635ca7b226790b81767f516cf53047a49c24bd187cedb23d88774e462cdf47
+
+build:
+  number: 0
+  script:
+    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+    - python -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ stdlib('c') }}
+    - ${{ compiler('rust') }}
+    - cargo-bundle-licenses
+  host:
+    - python
+    - pip
+    - maturin >=1.7,<2.0
+  run:
+    - python
+    - numpy
+
+tests:
+  - python:
+      imports:
+        - phonors
+      pip_check: true
+
+about:
+  homepage: https://github.com/phonopy/phonors
+  repository: https://github.com/phonopy/phonors
+  license: BSD-3-Clause
+  license_file:
+    - LICENSE
+    - THIRDPARTY.yml
+  summary: Rust kernels for phonopy and phono3py
+  description: |
+    phonors is a Rust extension module providing the heavy numerical
+    kernels used by phono3py and phonopy.  Built with maturin and
+    PyO3, distributed as abi3-py310 wheels on PyPI.
+
+extra:
+  recipe-maintainers:
+    - atztogo
