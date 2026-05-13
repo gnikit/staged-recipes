@@ -1,6 +1,5 @@
 {% set version = "2.2.2" %}
 {% set python_min = "3.11" %}
-{% set py = py | default(python_min) %}
 
 
 package:
@@ -44,9 +43,10 @@ test:
     - python
 
 about:
-  home: https://pypi.org/project/astro-gdt/
+  home: https://astro-gdt.readthedocs.io/
   summary: 'Gamma-ray Data Tools: Core Components'
-  doc_url: https://astro-gdt.readthedocs.io/en/latest/
+  doc_url: https://astro-gdt.readthedocs.io/
+  dev_url: https://github.com/USRA-STI/gdt-core
   license: Apache-2.0
   license_file:
     - NOTICE
