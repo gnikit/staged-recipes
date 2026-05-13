@@ -7,7 +7,7 @@ package:
 
 source:
   url: "https://github.com/LSSTDESC/augur/archive/{{ version }}.tar.gz"
-  sha256: "c2e50be936a52274e238135fa3f934907c2963a491c01ff1adef94611e7a6675"
+  sha256: "404bee4e2b7fe2b1f7db962cda19a5de12ada5da0058b0cc836c22ac1488b1de"
 
 build:
   skip: true  # [win or py<311]
