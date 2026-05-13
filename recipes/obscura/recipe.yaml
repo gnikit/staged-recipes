@@ -24,11 +24,8 @@ build:
         then:
           - export CFLAGS="${CFLAGS} -mlinker-version=100"
           - export CXXFLAGS="${CXXFLAGS} -mlinker-version=100"
-      - cargo auditable build --release --locked --package obscura-cli --features stealth
+      - cargo auditable install --locked --path crates/obscura-cli --features stealth --root ${{ PREFIX }}
       - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
-      - mkdir -p ${{ PREFIX }}/bin
-      - install -m755 target/*/release/obscura ${{ PREFIX }}/bin/obscura
-      - install -m755 target/*/release/obscura-worker ${{ PREFIX }}/bin/obscura-worker
 
 requirements:
   build:
