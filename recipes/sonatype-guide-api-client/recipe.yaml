@@ -35,7 +35,9 @@ tests:
   - python:
       imports: sonatype_guide_api_client
       pip_check: true
-      python_version: ${{ python_min }}.*
+      python_version:
+        - ${{ python_min }}.*
+        - ${{ python_check_max }}.*
 
 about:
   summary: Sonatype Guide API
