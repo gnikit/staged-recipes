@@ -8,8 +8,10 @@ package:
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/t/tree_sitter_markdown/tree_sitter_markdown-${{ version }}.tar.gz
-  sha256: 6c69d7270a7e09be8988ced44584c09a6a4f541cea0dc394dd1c1a5ac3b5601d
+  # The PyPI sdist for 0.5.1 is missing the vendored tree_sitter/{parser,alloc,array}.h
+  # headers, so build from the GitHub tag tarball instead.
+  url: https://github.com/tree-sitter-grammars/tree-sitter-markdown/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: acaffe5a54b4890f1a082ad6b309b600b792e93fc6ee2903d022257d5b15e216
 
 build:
   number: 0
