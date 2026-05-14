@@ -50,7 +50,6 @@ about:
   license_file: LICENSE
   homepage: https://github.com/opendataloader-project/opendataloader-pdf-llamaindex
   repository: https://github.com/opendataloader-project/opendataloader-pdf-llamaindex
-  issues: https://github.com/opendataloader-project/opendataloader-pdf-llamaindex/issues
 
 extra:
   recipe-maintainers:
