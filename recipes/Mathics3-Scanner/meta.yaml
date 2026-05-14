@@ -1,0 +1,59 @@
+{% set version = "10.0.1" %}
+{% set python_min = "3.11" %}
+
+package:
+  name: mathics3-scanner
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/M/Mathics3-Scanner/mathics3_scanner-{{ version }}.tar.gz
+  sha256: ff096599e3b04384d7056dc9068c00d14ad62c37c9dc6fa6d1639de49b59ab9d
+
+build:
+  entry_points:
+    - mathics3-make-boxing-character-json = mathics_scanner.generate.boxing_characters:main
+    - mathics3-make-named-character-json = mathics_scanner.generate.named_characters:main
+    - mathics3-make-operator-json = mathics_scanner.generate.operators:main
+    - mathics3-codeparser-tokenize = mathics_scanner.mathics3_code_tokenize:main
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python {{ python_min }}
+    - setuptools
+    - pyyaml
+    - click
+    - pip
+  run:
+    - python >={{ python_min }}
+    - pyyaml
+    - chardet
+    - click
+
+test:
+  imports:
+    - mathics_scanner
+  commands:
+    - pip check
+    - mathics3-make-boxing-character-json --help
+    - mathics3-make-named-character-json --help
+    - mathics3-make-operator-json --help
+    - mathics3-codeparser-tokenize --help
+  requires:
+    - pip
+    - python {{ python_min }}
+
+about:
+  home: https://mathics.org/
+  summary: Character Tables and Tokenizer for Mathics3 and the Wolfram Language.
+  license: GPL-3.0-or-later
+  license_file: COPYING.txt
+  dev_url: https://github.com/Mathics3/Mathics3-scanner
+  doc_url: https://mathics.org/
+
+extra:
+  recipe-maintainers:
+    - mmatera
+    - rocky
