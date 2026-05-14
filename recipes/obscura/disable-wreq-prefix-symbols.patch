@@ -1,0 +1,24 @@
+diff --git a/crates/obscura-net/Cargo.toml b/crates/obscura-net/Cargo.toml
+index 68bbb71..c1889fa 100644
+--- a/crates/obscura-net/Cargo.toml
++++ b/crates/obscura-net/Cargo.toml
+@@ -5,7 +5,7 @@ edition = "2024"
+ 
+ [features]
+ default = []
+-stealth = ["wreq", "wreq-util"]
++stealth = ["dep:wreq", "wreq-util"]
+ 
+ [dependencies]
+ anyhow = { workspace = true }
+@@ -16,5 +16,9 @@ serde_json = { workspace = true }
+ tracing = { workspace = true }
+ thiserror = { workspace = true }
+ async-trait = "0.1"
+-wreq = { version = "6.0.0-rc.28", optional = true, features = ["prefix-symbols"] }
+ wreq-util = { version = "3.0.0-rc.10", optional = true }
++[target.'cfg(any(target_os = "linux", target_os = "android"))'.dependencies]
++wreq = { version = "6.0.0-rc.28", optional = true, features = ["prefix-symbols"] }
++
++[target.'cfg(not(any(target_os = "linux", target_os = "android")))'.dependencies]
++wreq = { version = "6.0.0-rc.28", optional = true }
