@@ -1,0 +1,61 @@
+context:
+  version: "1.2.0"
+
+package:
+  name: mmpretrain
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/m/mmpretrain/mmpretrain-${{ version }}.tar.gz
+  sha256: bb3e975c62db8ca7d2d4a02ac63587c45ec067eeb0c4803e4a87aab8883ff19c
+  patches:
+    - model-index.patch
+
+build:
+  number: 0
+  skip:
+    - win
+    # mmcv does not publish Python 3.13 builds yet.
+    - match(python, ">=3.13")
+  script: python -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools
+  run:
+    - einops
+    - importlib-metadata
+    - mat4py
+    - matplotlib-base
+    - mmcv >=2.0.0,<2.4.0
+    - mmengine >=0.8.3,<1.0.0
+    - model-index
+    - numpy
+    - py-opencv
+    - python
+    - pytorch
+    - rich
+
+tests:
+  - python:
+      imports:
+        - mmpretrain
+  - script:
+      - python run_test.py
+    files:
+      recipe:
+        - run_test.py
+
+about:
+  homepage: https://github.com/open-mmlab/mmpretrain
+  repository: https://github.com/open-mmlab/mmpretrain
+  documentation: https://mmpretrain.readthedocs.io/
+  summary: OpenMMLab Pre-training Toolbox and Benchmark
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jeongseok-meta
