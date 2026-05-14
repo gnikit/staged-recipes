@@ -1,0 +1,52 @@
+{% set version = "0.1.2" %}
+{% set python_min = "3.11" %}
+
+package:
+  name: caf.viz
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/c/caf.viz/caf_viz-{{ version }}.tar.gz
+  sha256: 2f94fc71db90c334b44b2a720e87b718c82babdfac6e6c94b427d990e6c02cb2
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python {{ python_min }}
+    - setuptools >=64.0.0
+    - versioningit
+    - pip
+  run:
+    - python >={{ python_min }}
+    - numpy >=1.19.0
+    - pandas >=1.4.0
+    - matplotlib-base >=3.8.2
+    - scipy >=1.11.4
+    - pydantic >=2.0.0
+
+test:
+  imports:
+    - caf.viz
+  commands:
+    - pip check
+  requires:
+    - pip
+    - python {{ python_min }}
+
+about:
+  home: https://github.com/transport-for-the-north/caf.viz
+  summary: Visualisation functionality and tools for transport related data.
+  doc_url: http://cafviz.readthedocs.io/
+  dev_url: https://github.com/transport-for-the-north/caf.viz
+  license:  LicenseRef-TfN-License
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - MattBuckley-TfN
+    - BenTaylor-TfN
+    - isaac-tfn
