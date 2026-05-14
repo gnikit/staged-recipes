@@ -1,7 +1,6 @@
 {% set name = "conda-recipe-upstream-validator" %}
 {% set name_pypi = name | replace("-", "_") %}
 {% set version = "0.1.0" %}
-{% set python_min = "3.7" %}
 
 package:
   name: {{ name|lower }}
