@@ -16,28 +16,17 @@ build:
       CARGO_PROFILE_RELEASE_LTO: fat
       CARGO_PROFILE_RELEASE_STRIP: symbols
     content:
-      - if: unix
-        then:
-          - cargo auditable install --locked --no-track --bins --root="$PREFIX" --path=.
-          # copy manpage and generate shell completions
-          - mkdir -p "$PREFIX/share/man/man1" "$PREFIX"/share/bash-completion/completions "$PREFIX"/share/fish/vendor_completions.d "$PREFIX"/share/zsh/site-functions
-          - cp -r target/*/release/build/handlr-regex-*/out/manual/man1/* "$PREFIX"/share/man/man1/
-          - COMPLETE=bash "$PREFIX"/bin/handlr > "$PREFIX"/share/bash-completion/completions/handlr
-          - COMPLETE=fish "$PREFIX"/bin/handlr > "$PREFIX"/share/fish/vendor_completions.d/handlr.fish
-          - COMPLETE=zsh  "$PREFIX"/bin/handlr > "$PREFIX"/share/zsh/site-functions/_handlr
-      - if: win
-        then:
-          - cargo auditable install --locked --no-track --bins --root="%LIBRARY_PREFIX%" --path=.
-          # copy manpage and generate shell completions
-          - mkdir "%LIBRARY_PREFIX%"\share\man\man1
-          - mkdir "%LIBRARY_PREFIX%"\share\bash-completion\completions
-          - mkdir "%LIBRARY_PREFIX%"\share\fish\vendor_completions.d
-          - mkdir "%LIBRARY_PREFIX%"\share\zsh\site-functions
-          - powershell -NoProfile -Command "Copy-Item -Path 'target\release\build\handlr-regex-*\out\manual\man1\*' -Destination '%LIBRARY_PREFIX%\share\man\man1' -Recurse"
-          - powershell -NoProfile -Command "$env:COMPLETE=bash; & \"$env:LIBRARY_BIN\handlr.exe\" | Out-File -Encoding ascii \"$env:LIBRARY_PREFIX\share\bash-completion\completions\handlr\""
-          - powershell -NoProfile -Command "$env:COMPLETE=fish; & \"$env:LIBRARY_BIN\handlr.exe\" | Out-File -Encoding ascii \"$env:LIBRARY_PREFIX\share\fish\vendor_completions.d\handlr.fish\""
-          - powershell -NoProfile -Command "$env:COMPLETE=zsh;  & \"$env:LIBRARY_BIN\handlr.exe\" | Out-File -Encoding ascii \"$env:LIBRARY_PREFIX\share\zsh\site-functions\_handlr\""
+      - cargo auditable install --locked --no-track --bins --root="$PREFIX" --path=.
+      # copy manpage and generate shell completions
+      - mkdir -p "$PREFIX/share/man/man1" "$PREFIX"/share/bash-completion/completions "$PREFIX"/share/fish/vendor_completions.d "$PREFIX"/share/zsh/site-functions
+      - cp -r target/*/release/build/handlr-regex-*/out/manual/man1/* "$PREFIX"/share/man/man1/
+      - COMPLETE=bash "$PREFIX"/bin/handlr > "$PREFIX"/share/bash-completion/completions/handlr
+      - COMPLETE=fish "$PREFIX"/bin/handlr > "$PREFIX"/share/fish/vendor_completions.d/handlr.fish
+      - COMPLETE=zsh  "$PREFIX"/bin/handlr > "$PREFIX"/share/zsh/site-functions/_handlr
       - cargo-bundle-licenses --format=yaml --output=./THIRDPARTY.yml
+  skip:
+    - osx
+    - win
 
 requirements:
   build:
@@ -55,36 +44,19 @@ tests:
       bin:
         - handlr
       files:
-        - if: unix
-          then:
-            - share/man/man1/handlr.1
-            - share/man/man1/handlr-add.1
-            - share/man/man1/handlr-get.1
-            - share/man/man1/handlr-launch.1
-            - share/man/man1/handlr-list.1
-            - share/man/man1/handlr-mime.1
-            - share/man/man1/handlr-open.1
-            - share/man/man1/handlr-remove.1
-            - share/man/man1/handlr-set.1
-            - share/man/man1/handlr-unset.1
-            - share/bash-completion/completions/handlr
-            - share/fish/vendor_completions.d/handlr.fish
-            - share/zsh/site-functions/_handlr
-        - if: win
-          then:
-            - Library/share/man/man1/handlr.1
-            - Library/share/man/man1/handlr-add.1
-            - Library/share/man/man1/handlr-get.1
-            - Library/share/man/man1/handlr-launch.1
-            - Library/share/man/man1/handlr-list.1
-            - Library/share/man/man1/handlr-mime.1
-            - Library/share/man/man1/handlr-open.1
-            - Library/share/man/man1/handlr-remove.1
-            - Library/share/man/man1/handlr-set.1
-            - Library/share/man/man1/handlr-unset.1
-            - Library/share/bash-completion/completions/handlr
-            - Library/share/fish/vendor_completions.d/handlr.fish
-            - Library/share/zsh/site-functions/_handlr
+        - share/man/man1/handlr.1
+        - share/man/man1/handlr-add.1
+        - share/man/man1/handlr-get.1
+        - share/man/man1/handlr-launch.1
+        - share/man/man1/handlr-list.1
+        - share/man/man1/handlr-mime.1
+        - share/man/man1/handlr-open.1
+        - share/man/man1/handlr-remove.1
+        - share/man/man1/handlr-set.1
+        - share/man/man1/handlr-unset.1
+        - share/bash-completion/completions/handlr
+        - share/fish/vendor_completions.d/handlr.fish
+        - share/zsh/site-functions/_handlr
       strict: true
 
 about:
