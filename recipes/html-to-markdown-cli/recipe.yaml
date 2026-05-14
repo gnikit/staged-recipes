@@ -38,8 +38,6 @@ build:
           - '"%LIBRARY_BIN%"\html-to-markdown.exe --generate-completion fish > "%LIBRARY_PREFIX%"\share\fish\vendor_completions.d\html-to-markdown.fish'
           - '"%LIBRARY_BIN%"\html-to-markdown.exe --generate-completion zsh  > "%LIBRARY_PREFIX%"\share\zsh\site-functions\_html-to-markdown'
       - cargo-bundle-licenses --format=yaml --output=../../THIRDPARTY.yml
-      - if: unix
-        then:
 
 requirements:
   build:
