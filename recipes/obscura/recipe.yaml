@@ -24,8 +24,7 @@ build:
         then:
           - export CFLAGS="${CFLAGS} -mlinker-version=100"
           - export CXXFLAGS="${CXXFLAGS} -mlinker-version=100"
-      - cargo auditable install --locked --path crates/obscura-cli --features stealth --root ${{ PREFIX }}
-      - rm -f ${{ PREFIX }}/.crates.toml ${{ PREFIX }}/.crates2.json
+      - cargo auditable install --locked --path crates/obscura-cli --features stealth --root ${{ PREFIX }} --no-track
       - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
 
 requirements:
