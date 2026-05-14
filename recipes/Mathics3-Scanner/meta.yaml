@@ -50,6 +50,8 @@ about:
   summary: Character Tables and Tokenizer for Mathics3 and the Wolfram Language.
   license: GPL-3.0-or-later
   license_file: COPYING.txt
+  dev_url: https://github.com/Mathics3/Mathics3-scanner
+  doc_url: https://mathics.org/
 
 extra:
   recipe-maintainers:
