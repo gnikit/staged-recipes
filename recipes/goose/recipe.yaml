@@ -14,12 +14,6 @@ source:
 build:
   number: 0
 
-about:
-  homepage: https://goose-docs.ai
-  documentation: https://goose-docs.ai/docs
-  repository: https://github.com/aaif-goose/goose
-  license: Apache-2.0
-
 outputs:
   - package:
       name: goose-cli
@@ -27,10 +21,12 @@ outputs:
     build:
       script:
         - if: win
-          then: pushd crates\goose-cli
-          else: pushd crates/goose-cli
-        - pushd crates/goose-cli
-        - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+          then:
+            - pushd crates\goose-cli
+            - cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
+          else:
+            - pushd crates/goose-cli
+            - cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}/THIRDPARTY.yml
         - cargo install --no-track --locked --root ${{ PREFIX }} --path .
         - popd
     requirements:
@@ -54,14 +50,6 @@ outputs:
       license_file:
         - LICENSE
         - crates/goose-cli/THIRDPARTY.yml
-      summary: 'An open source, extensible AI agent that goes beyond code suggestions - install, execute, edit, and test with any LLM'
-      description: |
-        goose is a general-purpose AI agent that runs on your machine.
-        Not just for code — use it for research, writing, automation, data analysis, or anything you need to get done.
-
-        goose works with 15+ providers — Anthropic, OpenAI, Google, Ollama, OpenRouter, Azure, Bedrock, and more.
-        Use API keys or your existing Claude, ChatGPT, or Gemini subscriptions via [ACP](https://goose-docs.ai/docs/guides/acp-providers).
-        Connect to 70+ extensions via the [Model Context Protocol](https://modelcontextprotocol.io/) open standard.
 
   - package:
       name: goose-server
@@ -69,9 +57,12 @@ outputs:
     build:
       script:
         - if: win
-          then: pushd crates\goose-server
-          else: pushd crates/goose-server
-        - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+          then:
+            - pushd crates\goose-server
+            - cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
+          else:
+            - pushd crates/goose-server
+            - cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}/THIRDPARTY.yml
         - cargo install --no-track --locked --root ${{ PREFIX }} --path .
         - popd
     requirements:
@@ -91,17 +82,23 @@ outputs:
       - script:
           - goosed --version
           - goosed --help
-    about:
-      license_file:
-        - LICENSE
-        - crates/goose-server/THIRDPARTY.yml
-      summary: 'HTTP server backend for the Goose AI agent'
-      description: |
-        goose is a general-purpose AI agent that runs on your machine.
-        Not just for code — use it for research, writing, automation, data analysis, or anything you need to get done.
 
-        goose-server provides the HTTP server backend (goosed) for the Goose AI agent,
-        enabling desktop application integration and programmatic access to Goose capabilities.
+about:
+  homepage: https://goose-docs.ai
+  documentation: https://goose-docs.ai/docs
+  repository: https://github.com/aaif-goose/goose
+  license: Apache-2.0
+  license_file:
+    - LICENSE
+    - THIRDPARTY.yml
+  summary: 'An open source, extensible AI agent that goes beyond code suggestions - install, execute, edit, and test with any LLM'
+  description: |
+    goose is a general-purpose AI agent that runs on your machine.
+    Not just for code — use it for research, writing, automation, data analysis, or anything you need to get done.
+
+    goose works with 15+ providers — Anthropic, OpenAI, Google, Ollama, OpenRouter, Azure, Bedrock, and more.
+    Use API keys or your existing Claude, ChatGPT, or Gemini subscriptions via [ACP](https://goose-docs.ai/docs/guides/acp-providers).
+    Connect to 70+ extensions via the [Model Context Protocol](https://modelcontextprotocol.io/) open standard.
 
 extra:
   recipe-maintainers:
