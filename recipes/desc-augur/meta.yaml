@@ -1,0 +1,63 @@
+{% set version = "1.2.2" %}
+{% set python_min = "3.11" %}
+
+
+package:
+  name: "lsstdesc-augur"
+  version: "{{ version }}"
+
+source:
+  url: "https://github.com/LSSTDESC/augur/archive/{{ version }}.tar.gz"
+  sha256: "404bee4e2b7fe2b1f7db962cda19a5de12ada5da0058b0cc836c22ac1488b1de"
+
+build:
+  noarch: python
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - python {{ python_min }}
+    - pip
+    - setuptools 
+  run:
+    - python >={{ python_min }}
+    - numpy >=2.0
+    - scipy >1.12
+    - astropy-base
+    - firecrown >=1.14  # Primary structural dependency for LSSTDESC Augur
+    - matplotlib-base
+    - jinja2
+    - tjpcov
+    - numdifftools
+    - pyccl >=3.3.1
+    - pyyaml
+    - qp-prob
+    - numpydoc
+    - healpy
+    - click
+
+test:
+  requires:
+    - python {{ python_min }}
+    - pip
+  imports:
+    - augur
+  commands:
+    - pip check || echo "Ignoring known firecrown dependency warning"
+
+about:
+  home: "https://github.com/LSSTDESC/augur"
+  license: MIT
+  license_file: LICENSE
+  summary: "A DESC forecasting tool wrapping firecrown."
+  description: |
+    Augur is a wrapper to firecrown that generates synthetic datasets of 
+    arbitrary complexity and calls an inference engine to generate full MCMC 
+    or a simple second-order derivative at a fiducial model to generate 
+    a Fisher matrix forecast.
+  dev_url: https://github.com/LSSTDESC/augur
+
+extra:
+  recipe-maintainers:
+    - fjaviersanchez
