@@ -19,7 +19,6 @@ requirements:
     - python {{ python_min }}
     - setuptools >=45
     - setuptools-scm >=6.2
-    - wheel
     - pip
   run:
     - python >={{ python_min }}
