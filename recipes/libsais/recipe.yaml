@@ -1,0 +1,83 @@
+schema_version: 1
+
+context:
+  name: libsais
+  version: "2.10.4"
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/IlyaGrebnov/libsais/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 94aa88f9e29f8812214ecfa6b55f5dca14c7d8a427409c062f734a61ca4c6931
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ stdlib('c') }}
+    - cmake
+    - ninja
+  host:
+    - if: osx
+      then: llvm-openmp
+    - if: linux
+      then: libgomp
+    - if: win
+      then: vcomp14
+  run_exports:
+    - ${{ pin_subpackage('libsais', upper_bound='x') }}
+
+tests:
+  - script:
+      - if: unix
+        then:
+          - test -f ${PREFIX}/include/libsais.h
+          - test -f ${PREFIX}/include/libsais16.h
+          - test -f ${PREFIX}/include/libsais16x64.h
+          - test -f ${PREFIX}/include/libsais64.h
+          - test -f ${PREFIX}/lib/libsais${SHLIB_EXT}
+          - test -f ${PREFIX}/lib/cmake/libsais/libsaisConfig.cmake
+          - test -f ${PREFIX}/lib/cmake/libsais/libsaisConfigVersion.cmake
+      - if: win
+        then:
+          - if not exist %LIBRARY_INC%\libsais.h exit 1
+          - if not exist %LIBRARY_INC%\libsais16.h exit 1
+          - if not exist %LIBRARY_INC%\libsais16x64.h exit 1
+          - if not exist %LIBRARY_INC%\libsais64.h exit 1
+          - if not exist %LIBRARY_BIN%\libsais.dll exit 1
+          - if not exist %LIBRARY_LIB%\libsais.lib exit 1
+
+about:
+  homepage: https://github.com/IlyaGrebnov/libsais
+  summary: Fast linear-time construction of suffix array, LCP array and Burrows-Wheeler transform
+  description: |
+    libsais provides fast (linear time) construction of suffix array (SA),
+    generalized suffix array (GSA), longest common prefix (LCP) array,
+    permuted LCP (PLCP) array, Burrows-Wheeler transform (BWT) and inverse BWT
+    based on the induced sorting algorithm described in the following papers:
+
+    - Ge Nong, Sen Zhang, Wai Hong Chan, Two Efficient Algorithms for Linear
+      Time Suffix Array Construction, IEEE Transactions on Computers, vol. 60,
+      no. 10, pp. 1471-1484, 2011.
+    - Juha Karkkainen, Giovanni Manzini, Simon J. Puglisi, Permuted Longest-
+      Common-Prefix Array, CPM 2009: Combinatorial Pattern Matching, pp. 181-192.
+    - Nataliya Timoshevskaya, Wu-chun Feng, SAIS-OPT: On the characterization
+      and optimization of the SA-IS algorithm for suffix array construction,
+      BCB 2014: ACM Conference on Bioinformatics, Computational Biology and
+      Health Informatics, pp. 686-694.
+
+    The library is implemented in C99 and provides optional OpenMP support for
+    multi-core parallel construction.
+  license: Apache-2.0
+  license_family: Apache
+  license_file: LICENSE
+  documentation: https://github.com/IlyaGrebnov/libsais
+  repository: https://github.com/IlyaGrebnov/libsais
+
+extra:
+  recipe-maintainers:
+    - nh13
