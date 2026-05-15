@@ -3,7 +3,7 @@
 
 
 package:
-  name: "desc-augur"
+  name: "lsstdesc-augur"
   version: "{{ version }}"
 
 source:
