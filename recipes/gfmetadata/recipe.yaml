@@ -1,0 +1,46 @@
+schema_version: 1
+
+context:
+  version: 0.2.4
+
+package:
+  name: gfmetadata
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/g/gfmetadata/gfmetadata-${{ version }}.tar.gz
+  sha256: eafead9b60df9590b0a29e5e6de94188b1b3800af80a87701ffcda4e9648db5a
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - setuptools >=45
+    - setuptools-scm >=6.2
+    - pip
+  run:
+    - python >=${{ python_min }}
+    - protobuf >=6.33.0
+
+tests:
+  - python:
+      imports:
+        - gfmetadata
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
+
+about:
+  homepage: https://github.com/googlefonts/gf-metadata
+  summary: A python API for interacting with Google Fonts protobuf definitions
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
