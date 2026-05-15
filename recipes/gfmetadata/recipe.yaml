@@ -1,15 +1,14 @@
 schema_version: 1
 
 context:
-  name: gfmetadata
   version: 0.2.4
 
 package:
-  name: ${{ name|lower }}
+  name: gfmetadata
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/gfmetadata-${{ version }}.tar.gz
+  url: https://pypi.org/packages/source/g/gfmetadata/gfmetadata-${{ version }}.tar.gz
   sha256: eafead9b60df9590b0a29e5e6de94188b1b3800af80a87701ffcda4e9648db5a
 
 build:
