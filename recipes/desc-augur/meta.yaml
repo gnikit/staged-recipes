@@ -1,5 +1,7 @@
 {% set name = "desc-augur" %}
 {% set version = "1.2.2" %}
+{% set python_min = "3.11" %}
+
 
 package:
   name: "{{ name|lower }}"
@@ -11,6 +13,7 @@ source:
 
 build:
   noarch: python
+  number: 0
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
@@ -18,11 +21,11 @@ requirements:
     - python  # [build_platform != target_platform]
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
   host:
-    - python
+    - python {{ python_min }}
     - pip
     - setuptools 
   run:
-    - python
+    - python >={{ python_min }}
     - numpy >=2.0
     - scipy >1.12
     - astropy-base
@@ -39,6 +42,8 @@ requirements:
     - click
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - augur
 
