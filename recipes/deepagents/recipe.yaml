@@ -46,6 +46,7 @@ about:
   license: MIT
   license_file: LICENSE
   homepage: https://docs.langchain.com/oss/python/deepagents/overview
+  repository: https://github.com/langchain-ai/deepagents
   documentation: https://reference.langchain.com/python/deepagents/
 
 extra:
