@@ -10,8 +10,7 @@ source:
   sha256: "404bee4e2b7fe2b1f7db962cda19a5de12ada5da0058b0cc836c22ac1488b1de"
 
 build:
-  skip: true  # [win or py<311]
-  number: 0
+  noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
@@ -32,12 +31,12 @@ requirements:
     - jinja2
     - tjpcov
     - numdifftools
-    - numpydoc
     - pyccl >=3.3.1
-    - sphinx
     - pyyaml
     - qp-prob
-    - cosmosis-build-standard-library
+    - numpydoc
+    - healpy
+    - click
 
 test:
   imports:
@@ -53,6 +52,7 @@ about:
     arbitrary complexity and calls an inference engine to generate full MCMC 
     or a simple second-order derivative at a fiducial model to generate 
     a Fisher matrix forecast.
+  dev_url: https://github.com/LSSTDESC/augur
 
 extra:
   recipe-maintainers:
