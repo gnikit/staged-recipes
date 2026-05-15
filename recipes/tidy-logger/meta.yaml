@@ -16,7 +16,7 @@ build:
 
 requirements:
   host:
-    - python >={{ python_min }}
+    - python {{ python_min }}
     - poetry-core
     - poetry-dynamic-versioning >=1.0.0,<2.0.0
     - pip
@@ -31,7 +31,7 @@ test:
     - pip check
   requires:
     - pip
-    - python >={{ python_min }}
+    - python {{ python_min }}
 
 about:
   home: https://pypi.org/project/tidy-logger/
