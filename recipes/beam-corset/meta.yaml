@@ -16,7 +16,7 @@ build:
 
 requirements:
   host:
-    - python >={{ python_min }}
+    - python {{ python_min }}
     - hatchling
     - pip
   run:
@@ -32,12 +32,14 @@ test:
   commands:
     - pip check
   requires:
+    - python {{ python_min }}
     - pip
 
 about:
   home: https://lkies.github.io/corset/
   summary: Beam Corset is a Gaussian optics mode matching tool made for use in Jupyter notebooks.
   dev_url: https://github.com/lkies/corset
+  doc_url: https://lkies.github.io/corset/
   license: BSD-3-Clause
   license_file: LICENSE
 
