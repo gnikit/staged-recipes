@@ -1,13 +1,12 @@
 context:
-  name: hk
   version: "1.45.0"
 
 package:
-  name: ${{ name|lower }}
+  name: hk
   version: ${{ version }}
 
 source:
-  url: https://github.com/jdx/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
+  url: https://github.com/jdx/hk/archive/refs/tags/v${{ version }}.tar.gz
   sha256: 9bb67d48442f8fa77dec9d55fad9f29b20db5c472104955b8a287b753809ed3d
 
 build:
