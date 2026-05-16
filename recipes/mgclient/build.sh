@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if [[ "${target_platform}" == "osx-64" ]]; then
-  CMAKE_ARGS="${CMAKE_ARGS:-} -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_OSX_ARCHITECTURES=x86_64"
+  CMAKE_ARGS="${CMAKE_ARGS:-} -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_OSX_ARCHITECTURES=x86_64"
 fi
 
 if [[ "${target_platform}" == "osx-arm64" ]]; then
@@ -19,7 +19,7 @@ pushd "${SRC_DIR}"/build
 popd
 
 if [[ "${target_platform}" != "osx-"* ]] && [[ "${target_platform}" != "linux-"* ]]; then
-  # Oddly, cmake install the dll in 'lib'
+  # Oddly, cmake installs the dll in 'lib'
   mv "${PREFIX}"/Library/lib/mgclient.dll ${PREFIX}/Library/bin/mgclient.dll
 fi
 
