@@ -32,7 +32,7 @@ requirements:
   run:
     - openssl
   run_exports:                                                                                                    
-    - ${{ pin_subpackage('libmgclient', upper_bound='x.x') }}                                                     
+    - ${{ pin_subpackage('mgclient', upper_bound='x.x') }}                                                     
 
 tests:
   - package_contents:
