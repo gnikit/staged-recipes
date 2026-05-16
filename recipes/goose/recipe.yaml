@@ -22,14 +22,15 @@ outputs:
       script:
         - if: win
           then: |
-            call set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_TOOLSET=v143=%"
+            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_TOOLSET=v143=%"
+            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_PLATFORM=x64=%"
             set CMAKE_GENERATOR=Ninja
             set CMAKE_GENERATOR_TOOLSET=
             pushd crates\goose-cli
             cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
           else: |
             export CMAKE_GENERATOR=Ninja
-            export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib -lomp"
+            export RUSTFLAGS="-Clink-arg=-L${PREFIX}/lib -Clink-arg=-lomp"
             pushd crates/goose-cli
             cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}/THIRDPARTY.yml
         - cargo install --no-track --locked --root ${{ PREFIX }} --path .
@@ -68,14 +69,15 @@ outputs:
       script:
         - if: win
           then: |
-            call set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_TOOLSET=v143=%"
+            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_TOOLSET=v143=%"
+            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_PLATFORM=x64=%"
             set CMAKE_GENERATOR=Ninja
             set CMAKE_GENERATOR_TOOLSET=
             pushd crates\goose-server
             cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
           else: |
             export CMAKE_GENERATOR=Ninja
-            export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib -lomp"
+            export RUSTFLAGS="-Clink-arg=-L${PREFIX}/lib -Clink-arg=-lomp"
             pushd crates/goose-server
             cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}/THIRDPARTY.yml
         - cargo install --no-track --locked --root ${{ PREFIX }} --path .
