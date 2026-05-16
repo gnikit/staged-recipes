@@ -44,6 +44,7 @@ about:
   home: https://github.com/HiroshiKERA/calt
   summary: A library for computational algebra using Transformers
   dev_url: https://github.com/HiroshiKERA/calt
+  doc_url: https://hiroshikera.github.io/calt/
   license: MIT
   license_file: LICENSE
 
