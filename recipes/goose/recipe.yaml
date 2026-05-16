@@ -22,10 +22,11 @@ outputs:
       script:
         - if: win
           then: |
-            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_TOOLSET=v143=%"
-            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_PLATFORM=x64=%"
             set CMAKE_GENERATOR=Ninja
             set CMAKE_GENERATOR_TOOLSET=
+            set CMAKE_GENERATOR_PLATFORM=
+            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_TOOLSET=v143=%"
+            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_PLATFORM=x64=%"
             pushd crates\goose-cli
             cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
           else: |
@@ -57,10 +58,6 @@ outputs:
       - script:
           - goose --version
           - goose --help
-    about:
-      license_file:
-        - LICENSE
-        - crates/goose-cli/THIRDPARTY.yml
 
   - package:
       name: goose-server
@@ -69,10 +66,11 @@ outputs:
       script:
         - if: win
           then: |
-            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_TOOLSET=v143=%"
-            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_PLATFORM=x64=%"
             set CMAKE_GENERATOR=Ninja
             set CMAKE_GENERATOR_TOOLSET=
+            set CMAKE_GENERATOR_PLATFORM=
+            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_TOOLSET=v143=%"
+            set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_PLATFORM=x64=%"
             pushd crates\goose-server
             cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
           else: |
