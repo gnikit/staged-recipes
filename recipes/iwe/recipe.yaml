@@ -1,0 +1,90 @@
+context:
+  version: "0.1.4"
+
+package:
+  name: iwe
+  version: ${{ version }}
+
+source:
+  url: https://github.com/iwe-org/iwe/archive/refs/tags/iwe-v${{ version }}.tar.gz
+  sha256: db60cb8e992ea2fcfd96d6f429d67cee89ee5eabb07f913db7f2db393e9c455b
+
+build:
+  number: 0
+  script:
+    env:
+      CARGO_PROFILE_RELEASE_LTO: fat
+      CARGO_PROFILE_RELEASE_STRIP: symbols
+    content:
+      - if: unix
+        then:
+          - cargo auditable install --locked --no-track --bins --root="$PREFIX" --path=./crates/iwe
+          - cargo auditable install --locked --no-track --bins --root="$PREFIX" --path=./crates/iwec
+          - cargo auditable install --locked --no-track --bins --root="$PREFIX" --path=./crates/iwes
+          # generate shell completions
+          - mkdir -p "$PREFIX"/share/bash-completion/completions "$PREFIX"/share/fish/vendor_completions.d "$PREFIX"/share/zsh/site-functions
+          - '"$PREFIX"/bin/iwe completions bash > "$PREFIX"/share/bash-completion/completions/iwe'
+          - '"$PREFIX"/bin/iwe completions fish > "$PREFIX"/share/fish/vendor_completions.d/iwe.fish'
+          - '"$PREFIX"/bin/iwe completions zsh  > "$PREFIX"/share/zsh/site-functions/_iwe'
+      - if: win
+        then:
+          - cargo auditable install --locked --no-track --bins --root="%LIBRARY_PREFIX%" --path=./crates/iwe
+          - cargo auditable install --locked --no-track --bins --root="%LIBRARY_PREFIX%" --path=./crates/iwec
+          - cargo auditable install --locked --no-track --bins --root="%LIBRARY_PREFIX%" --path=./crates/iwes
+          # generate shell completions
+          - mkdir "%LIBRARY_PREFIX%"\share\bash-completion\completions
+          - mkdir "%LIBRARY_PREFIX%"\share\fish\vendor_completions.d
+          - mkdir "%LIBRARY_PREFIX%"\share\zsh\site-functions
+          - '"%LIBRARY_BIN%"\iwe.exe completions bash > "%LIBRARY_PREFIX%"\share\bash-completion\completions\iwe'
+          - '"%LIBRARY_BIN%"\iwe.exe completions fish > "%LIBRARY_PREFIX%"\share\fish\vendor_completions.d\iwe.fish'
+          - '"%LIBRARY_BIN%"\iwe.exe completions zsh  > "%LIBRARY_PREFIX%"\share\zsh\site-functions\_iwe'
+      - cargo-bundle-licenses --format=yaml --output=./THIRDPARTY.yml
+
+requirements:
+  build:
+    - ${{ stdlib('c') }}
+    - ${{ compiler('c') }}
+    - ${{ compiler('rust') }}
+    - cargo-auditable
+    - cargo-bundle-licenses
+
+tests:
+  - script:
+      - iwe --help
+      - iwe --version
+  - package_contents:
+      bin:
+        - iwe
+        - iwec
+        - iwes
+      files:
+        - if: unix
+          then:
+            - share/bash-completion/completions/iwe
+            - share/fish/vendor_completions.d/iwe.fish
+            - share/zsh/site-functions/_iwe
+        - if: win
+          then:
+            - Library/share/bash-completion/completions/iwe
+            - Library/share/fish/vendor_completions.d/iwe.fish
+            - Library/share/zsh/site-functions/_iwe
+      strict: true
+
+about:
+  summary: IWE – Markdown memory system for you and your AI Agents
+  description: |
+    IWE is a knowledge graph system that serves as a "second brain" for humans
+    and AI agents. It organizes notes hierarchically and makes them accessible
+    through CLI tools and LSP for editor integration (VS Code, Neovim, Zed,
+    Helix etc.).
+  license: Apache-2.0
+  license_file:
+    - LICENSE-APACHE
+    - THIRDPARTY.yml
+  homepage: https://iwe.org
+  documentation: https://iwe.md/docs/
+  repository: https://github.com/iwe-org/iwe
+
+extra:
+  recipe-maintainers:
+    - salim-b
