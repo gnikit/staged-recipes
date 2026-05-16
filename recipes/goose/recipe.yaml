@@ -21,33 +21,36 @@ outputs:
     build:
       script:
         - if: win
-          then:
-            - set CMAKE_GENERATOR_TOOLSET=v143
-            - pushd crates\goose-cli
-            - cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
-          else:
-            - pushd crates/goose-cli
-            - cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}/THIRDPARTY.yml
+          then: |
+            call set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_TOOLSET=v143=%"
+            set CMAKE_GENERATOR=Ninja
+            set CMAKE_GENERATOR_TOOLSET=
+            pushd crates\goose-cli
+            cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
+          else: |
+            export CMAKE_GENERATOR=Ninja
+            pushd crates/goose-cli
+            cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}/THIRDPARTY.yml
         - cargo install --no-track --locked --root ${{ PREFIX }} --path .
         - popd
     requirements:
       build:
-        - ${{ compiler('c') }}
         - ${{ compiler('cxx') }}
         - ${{ stdlib('c') }}
         - ${{ compiler('rust') }}
         - ${{ 'protobuf' if linux }}
         - cargo-bundle-licenses
         - cmake
+        - ninja
         - pkg-config
       host:
+        - ${{ 'llvm-openmp' if osx }}
         - if: linux
           then:
             - dbus
             - libxcb
         - clangdev
-        - llvm-openmp
-        - zlib-ng
+        - zlib
     tests:
       - script:
           - goose --version
@@ -63,33 +66,36 @@ outputs:
     build:
       script:
         - if: win
-          then:
-            - set CMAKE_GENERATOR_TOOLSET=v143
-            - pushd crates\goose-server
-            - cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
-          else:
-            - pushd crates/goose-server
-            - cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}/THIRDPARTY.yml
+          then: |
+            call set "CMAKE_ARGS=%CMAKE_ARGS:-DCMAKE_GENERATOR_TOOLSET=v143=%"
+            set CMAKE_GENERATOR=Ninja
+            set CMAKE_GENERATOR_TOOLSET=
+            pushd crates\goose-server
+            cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
+          else: |
+            export CMAKE_GENERATOR=Ninja
+            pushd crates/goose-server
+            cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}/THIRDPARTY.yml
         - cargo install --no-track --locked --root ${{ PREFIX }} --path .
         - popd
     requirements:
       build:
-        - ${{ compiler('c') }}
         - ${{ compiler('cxx') }}
         - ${{ stdlib('c') }}
         - ${{ compiler('rust') }}
         - ${{ 'protobuf' if linux }}
         - cargo-bundle-licenses
         - cmake
+        - ninja
         - pkg-config
       host:
+        - ${{ 'llvm-openmp' if osx }}
         - if: linux
           then:
             - dbus
             - libxcb
         - clangdev
-        - llvm-openmp
-        - zlib-ng
+        - zlib
     tests:
       - script:
           - goosed --version
