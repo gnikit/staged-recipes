@@ -4,6 +4,7 @@ context:
   version: "5.2.3"
 
 package:
+  name: cachebox
   version: ${{ version }}
 
 source:
