@@ -17,8 +17,6 @@ source:
 
 build:
   number: 0
-  run_exports:                                                                                                    
-    - ${{ pin_subpackage('libmgclient', upper_bound='x.x') }}                                                     
 
 requirements:
   build:
@@ -31,6 +29,10 @@ requirements:
     - ${{ m2 }}sed
   host:
     - openssl
+  run:
+    - openssl
+  run_exports:                                                                                                    
+    - ${{ pin_subpackage('libmgclient', upper_bound='x.x') }}                                                     
 
 tests:
   - package_contents:
