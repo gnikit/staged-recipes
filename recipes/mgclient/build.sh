@@ -18,11 +18,6 @@ pushd "${SRC_DIR}"/build
   ninja install
 popd
 
-if [[ "${target_platform}" != "osx-"* ]] && [[ "${target_platform}" != "linux-"* ]]; then
-  # Oddly, cmake installs the dll in 'lib'
-  mv "${PREFIX}"/Library/lib/mgclient.dll ${PREFIX}/Library/bin/mgclient.dll
-fi
-
 # The static library .lib conflicts with the dynamic on non-linux platforms,
 # and the tests depend on static library
 if [[ "${target_platform}" == "linux-"* ]]; then
