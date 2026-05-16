@@ -29,6 +29,7 @@ outputs:
             cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
           else: |
             export CMAKE_GENERATOR=Ninja
+            export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib -lomp"
             pushd crates/goose-cli
             cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}/THIRDPARTY.yml
         - cargo install --no-track --locked --root ${{ PREFIX }} --path .
@@ -74,6 +75,7 @@ outputs:
             cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}\THIRDPARTY.yml
           else: |
             export CMAKE_GENERATOR=Ninja
+            export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib -lomp"
             pushd crates/goose-server
             cargo-bundle-licenses --format yaml --output ${{ SRC_DIR }}/THIRDPARTY.yml
         - cargo install --no-track --locked --root ${{ PREFIX }} --path .
