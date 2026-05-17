@@ -1,0 +1,25 @@
+From 7b763b537c317a89a02d0dd3c8dd214c44b08e8e Mon Sep 17 00:00:00 2001
+From: Matthew Feickert <matthew.feickert@cern.ch>
+Date: Tue, 12 May 2026 11:37:32 -0600
+Subject: [PATCH] FIX: Remove setuptools-scm from run dependencies
+
+* setuptools-scm is a build dependency, not a run dependency.
+---
+ pyproject.toml | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 682c25c..dc8ff00 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -17,7 +17,6 @@ classifiers = [
+     "Programming Language :: Python :: 3",
+ ]
+ dependencies = [
+-    "setuptools-scm",
+     "numpy",
+     "adios2",
+     "termcolor"
+-- 
+2.54.0
+
